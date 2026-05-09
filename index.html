@@ -3,962 +3,512 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hayley — a thinking companion</title>
-<meta name="description" content="Speak for sixty seconds. Hayley listens, reflects, and surfaces what you haven't quite said yet.">
+<title>Hayley — think more clearly</title>
+<meta name="description" content="Speak for sixty seconds. Hayley reflects what you're really saying, identifies patterns over time, and helps you think more clearly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
-  /* ─── Tokens ─────────────────────────────── */
-  :root {
-    --bg:        #F7F4EE;
-    --bg2:       #EEF2F0;
-    --bg3:       #E8EDE9;
-    --text:      #2C3830;
-    --text2:     #5A6B62;
-    --text3:     #8FA498;
-    --accent:    #7BA99A;
-    --accent2:   rgba(123,169,154,0.15);
-    --accent3:   rgba(123,169,154,0.35);
-    --divider:   rgba(44,56,48,0.08);
-    --dot1:      #7BA99A;
-    --dot2:      #B8956A;
-    --dot3:      #6A8B99;
-    --card1:     rgba(123,169,154,0.10);
-    --card2:     rgba(184,169,154,0.12);
-    --card3:     rgba(154,176,169,0.10);
-  }
-
-  /* ─── Reset ──────────────────────────────── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  /* ─── Typography ─────────────────────────── */
-  .t-display {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-  }
-
-  .t-italic {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-  }
-
-  .t-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: lowercase;
-    color: var(--text3);
-  }
-
-  /* ─── Layout ─────────────────────────────── */
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 0 28px;
-  }
-
-  section { padding: 80px 0; }
-
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: var(--divider);
-  }
-
-  /* ─── Nav ────────────────────────────────── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: var(--bg);
-    border-bottom: 1px solid var(--divider);
-    padding: 0 28px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    font-size: 22px;
-    color: var(--text);
-    letter-spacing: -0.03em;
-    text-decoration: none;
-  }
-
-  .nav-cta {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--bg);
-    background: var(--text);
-    padding: 8px 20px;
-    border-radius: 999px;
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: opacity 0.2s;
-  }
-
-  .nav-cta:hover { opacity: 0.75; }
-
-  /* ─── Hero ───────────────────────────────── */
-  .hero {
-    padding-top: 140px;
-    padding-bottom: 80px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-  .hero-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.1s;
-  }
-
-  .hero-eyebrow .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-  }
-
-  .hero-headline {
-    font-size: clamp(44px, 8vw, 72px);
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.25s;
-  }
-
-  .hero-sub {
-    font-size: clamp(18px, 3vw, 22px);
-    color: var(--text2);
-    line-height: 1.5;
-    max-width: 480px;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.45s;
-  }
-
-  .hero-rule {
-    width: 32px;
-    height: 1.5px;
-    background: var(--accent);
-    margin: 8px 0 0;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards 0.35s;
-  }
-
-  .hero-actions {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.7s ease forwards 0.65s;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--text);
-    color: var(--bg);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 14px 28px;
-    border-radius: 999px;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .btn-primary:hover { opacity: 0.75; }
-
-  .btn-primary svg {
-    width: 16px; height: 16px;
-    fill: currentColor;
-  }
-
-  .btn-ghost {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    color: var(--text3);
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: color 0.2s;
-  }
-
-  .btn-ghost:hover { color: var(--text); }
-
-  /* ─── Phone Mockup ───────────────────────── */
-  .mockup-wrap {
-    opacity: 0;
-    animation: fadeUp 0.8s ease forwards 0.5s;
-    display: flex;
-    justify-content: center;
-    padding: 0 0 20px;
-  }
-
-  .phone {
-    width: 240px;
-    background: var(--text);
-    border-radius: 40px;
-    padding: 16px;
-    box-shadow:
-      0 40px 80px rgba(44,56,48,0.18),
-      0 0 0 1px rgba(44,56,48,0.08);
-    position: relative;
-  }
-
-  .phone-notch {
-    width: 80px;
-    height: 8px;
-    background: #1a2019;
-    border-radius: 999px;
-    margin: 0 auto 16px;
-  }
-
-  .phone-screen {
-    background: var(--bg);
-    border-radius: 28px;
-    padding: 24px 20px 28px;
-    min-height: 420px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .phone-date {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    color: var(--text3);
-    letter-spacing: 0.04em;
-    margin-bottom: 4px;
-  }
-
-  .phone-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    font-size: 28px;
-    color: var(--text);
-    letter-spacing: -0.03em;
-    margin-bottom: 20px;
-  }
-
-  .phone-rule { width: 100%; height: 1px; background: var(--divider); margin-bottom: 20px; }
-
-  .phone-label {
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--text3);
-    text-transform: lowercase;
-    margin-bottom: 12px;
-  }
-
-  .phone-cards { display: flex; flex-direction: column; gap: 8px; }
-
-  .phone-card {
-    border-radius: 14px;
-    padding: 14px;
-  }
-
-  .phone-card.c1 { background: var(--card1); border: 1px solid rgba(123,169,154,0.15); }
-  .phone-card.c2 { background: var(--card2); border: 1px solid rgba(184,149,106,0.15); }
-  .phone-card.c3 { background: var(--card3); border: 1px solid rgba(106,139,153,0.12); }
-
-  .pc-kind {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 5px;
-  }
-
-  .pc-dot {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-  }
-
-  .pc-kind-text {
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-  }
-
-  .pc-headline {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 15px;
-    color: var(--text);
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-    margin-bottom: 4px;
-  }
-
-  .pc-body {
-    font-size: 10px;
-    color: var(--text2);
-    line-height: 1.5;
-  }
-
-  /* ─── How It Works ───────────────────────── */
-  .how-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .how-step {
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 20px;
-    padding: 32px 0;
-    border-bottom: 1px solid var(--divider);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-
-  .how-step.visible { opacity: 1; transform: translateY(0); }
-  .how-step:last-child { border-bottom: none; }
-
-  .how-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 400;
-    font-size: 32px;
-    color: var(--text3);
-    line-height: 1;
-    padding-top: 4px;
-  }
-
-  .how-content {}
-
-  .how-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 22px;
-    color: var(--text);
-    margin-bottom: 8px;
-    line-height: 1.2;
-  }
-
-  .how-body {
-    font-size: 14px;
-    color: var(--text2);
-    line-height: 1.65;
-  }
-
-  /* ─── Insight example ────────────────────── */
-  .insight-section { background: var(--bg2); }
-
-  .insight-intro {
-    margin-bottom: 40px;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-
-  .insight-intro.visible { opacity: 1; transform: translateY(0); }
-
-  .insight-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .insight-card {
-    background: var(--bg);
-    border-radius: 20px;
-    padding: 24px;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-
-  .insight-card.visible { opacity: 1; transform: translateY(0); }
-
-  .ic-kind {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .ic-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-  }
-
-  .ic-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: lowercase;
-  }
-
-  .ic-headline {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 26px;
-    color: var(--text);
-    letter-spacing: -0.02em;
-    margin-bottom: 10px;
-    line-height: 1.15;
-  }
-
-  .ic-body {
-    font-size: 14px;
-    color: var(--text2);
-    line-height: 1.65;
-  }
-
-  /* ─── Memory section ─────────────────────── */
-  .memory-intro {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.6s, transform 0.6s;
-  }
-
-  .memory-intro.visible { opacity: 1; transform: translateY(0); }
-
-  .memory-headline {
-    font-size: clamp(32px, 5vw, 48px);
-    margin-bottom: 20px;
-    color: var(--text);
-  }
-
-  .memory-body {
-    font-size: 16px;
-    color: var(--text2);
-    line-height: 1.7;
-    max-width: 520px;
-    margin-bottom: 40px;
-  }
-
-  .pattern-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 40px;
-    opacity: 0;
-    transition: opacity 0.5s 0.2s;
-  }
-
-  .pattern-tags.visible { opacity: 1; }
-
-  .pattern-tag {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    padding: 8px 16px;
-    border: 1px solid var(--accent3);
-    border-radius: 999px;
-    color: var(--text2);
-    font-size: 15px;
-  }
-
-  .pattern-tag.strong {
-    font-size: 17px;
-    color: var(--text);
-    border-color: rgba(44,56,48,0.15);
-  }
-
-  /* ─── Pricing ────────────────────────────── */
-  .pricing-card {
-    background: var(--bg2);
-    border-radius: 24px;
-    padding: 40px;
-    border: 1px solid var(--divider);
-    max-width: 440px;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 0.5s, transform 0.5s;
-  }
-
-  .pricing-card.visible { opacity: 1; transform: translateY(0); }
-
-  .price-amount {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    font-size: 52px;
-    color: var(--text);
-    letter-spacing: -0.03em;
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .price-period {
-    font-size: 13px;
-    color: var(--text3);
-    margin-bottom: 28px;
-    letter-spacing: 0.02em;
-  }
-
-  .price-rule {
-    width: 100%;
-    height: 1px;
-    background: var(--divider);
-    margin-bottom: 24px;
-  }
-
-  .price-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 32px;
-  }
-
-  .price-feature {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: 14px;
-    color: var(--text2);
-    line-height: 1.5;
-  }
-
-  .price-feature::before {
-    content: '';
-    width: 2px;
-    height: 18px;
-    background: var(--accent);
-    border-radius: 2px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .price-trial {
-    font-size: 12px;
-    color: var(--text3);
-    text-align: center;
-    margin-top: 12px;
-    letter-spacing: 0.02em;
-  }
-
-  /* ─── Waitlist ───────────────────────────── */
-  .waitlist-section {
-    background: var(--text);
-    color: var(--bg);
-  }
-
-  .waitlist-section .t-italic { color: var(--bg); }
-  .waitlist-section p { color: rgba(247,244,238,0.6); }
-
-  .waitlist-form {
-    display: flex;
-    gap: 12px;
-    margin-top: 32px;
-    flex-wrap: wrap;
-  }
-
-  .waitlist-input {
-    flex: 1;
-    min-width: 220px;
-    background: rgba(247,244,238,0.08);
-    border: 1px solid rgba(247,244,238,0.15);
-    border-radius: 999px;
-    padding: 14px 20px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--bg);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .waitlist-input::placeholder { color: rgba(247,244,238,0.35); }
-  .waitlist-input:focus { border-color: var(--accent); }
-
-  .waitlist-btn {
-    background: var(--accent);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 14px 28px;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    white-space: nowrap;
-  }
-
-  .waitlist-btn:hover { opacity: 0.8; }
-
-  .waitlist-thanks {
-    display: none;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 20px;
-    color: rgba(247,244,238,0.7);
-    margin-top: 20px;
-  }
-
-  /* ─── Footer ─────────────────────────────── */
-  footer {
-    padding: 40px 28px;
-    border-top: 1px solid var(--divider);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    font-size: 18px;
-    color: var(--text);
-    letter-spacing: -0.02em;
-  }
-
-  .footer-note {
-    font-size: 12px;
-    color: var(--text3);
-  }
-
-  /* ─── Animations ─────────────────────────── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ─── Responsive ─────────────────────────── */
-  @media (min-width: 600px) {
-    .hero {
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 60px;
-    }
-
-    .hero-content { order: 1; }
-    .mockup-wrap  { order: 2; }
-
-    .how-step { grid-template-columns: 64px 1fr; }
-  }
-
-  @media (max-width: 599px) {
-    .mockup-wrap { padding-bottom: 0; }
-    .phone { width: 200px; }
-    .phone-screen { min-height: 360px; }
-    footer { flex-direction: column; text-align: center; }
-  }
+:root{--bg:#F7F4EE;--bg2:#EEF2F0;--bg3:#E8EDE9;--text:#2C3830;--text2:#5A6B62;--text3:#8FA498;--accent:#7BA99A;--a2:rgba(123,169,154,.14);--a3:rgba(123,169,154,.32);--div:rgba(44,56,48,.08);--c1bg:rgba(123,169,154,.10);--c2bg:rgba(184,169,154,.12);--c3bg:rgba(154,176,169,.10);--c1:#7BA99A;--c2:#B8956A;--c3:#6A8B99;--r:28px;--rp:999px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.cg{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:-.03em;line-height:1.05}
+.cgi{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;letter-spacing:-.01em;line-height:1.15}
+.lbl{font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--text3);text-transform:lowercase}
+.wrap{max-width:1100px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+.wn{max-width:740px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+.div{height:1px;background:var(--div)}
+section{padding:clamp(60px,8vw,110px) 0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,48px);background:var(--bg);border-bottom:1px solid var(--div)}
+.nl{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px;letter-spacing:-.04em}
+.nlinks{display:flex;align-items:center;gap:28px}
+.nlink{font-size:13px;color:var(--text3);transition:color .2s}.nlink:hover{color:var(--text)}
+.ncta{font-size:12px;font-weight:500;background:var(--text);color:var(--bg);padding:8px 20px;border-radius:var(--rp);transition:opacity .2s}.ncta:hover{opacity:.75}
+@media(max-width:600px){.nlink{display:none}.nlinks{gap:12px}}
+
+/* HERO */
+.hero{padding-top:clamp(96px,12vw,148px);padding-bottom:clamp(48px,6vw,80px)}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
+@media(max-width:768px){.hero-grid{grid-template-columns:1fr}.hv{order:-1;display:flex;justify-content:center}}
+.he{opacity:0;animation:up .6s ease forwards}
+.he:nth-child(1){animation-delay:.08s}.he:nth-child(2){animation-delay:.18s}.he:nth-child(3){animation-delay:.28s}.he:nth-child(4){animation-delay:.38s}.he:nth-child(5){animation-delay:.48s}.he:nth-child(6){animation-delay:.58s}
+.eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.h1{font-size:clamp(44px,5.5vw,70px);margin-bottom:10px}
+.rule{width:32px;height:1.5px;background:var(--accent);margin-bottom:18px}
+.hsub{font-size:clamp(16px,1.8vw,19px);color:var(--text2);line-height:1.65;margin-bottom:10px}
+.hclar{font-size:14px;color:var(--text3);line-height:1.65;max-width:420px;margin-bottom:32px}
+.hacts{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.bd{display:inline-flex;align-items:center;gap:8px;background:var(--text);color:var(--bg);font-size:14px;font-weight:500;padding:13px 26px;border-radius:var(--rp);transition:opacity .2s}.bd:hover{opacity:.75}
+.bg{font-size:13px;color:var(--text3);transition:color .2s}.bg:hover{color:var(--text)}
+.hv{opacity:0;animation:up .7s ease forwards .36s}
+
+/* PHONE */
+.phone-wrap{position:relative;width:clamp(200px,24vw,268px)}
+.phone{background:#1b2118;border-radius:42px;padding:13px;box-shadow:0 48px 90px rgba(44,56,48,.2),0 0 0 1px rgba(44,56,48,.1)}
+.pnotch{width:68px;height:7px;background:#111;border-radius:var(--rp);margin:0 auto 13px}
+.pscreen{background:var(--bg);border-radius:30px;padding:18px 16px 22px;min-height:460px;display:flex;flex-direction:column}
+.pdate{font-size:9px;font-weight:500;letter-spacing:.05em;color:var(--text3);margin-bottom:3px}
+.ptitle{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;color:var(--text);letter-spacing:-.04em;margin-bottom:16px;line-height:1}
+.prule{height:1px;background:var(--div);margin-bottom:15px}
+.plabel{font-size:9px;font-weight:500;letter-spacing:.08em;color:var(--text3);margin-bottom:9px}
+.pcards{display:flex;flex-direction:column;gap:7px}
+.pcard{border-radius:11px;padding:11px 12px}
+.pcard.c1{background:var(--c1bg);border:1px solid rgba(123,169,154,.2)}
+.pcard.c2{background:var(--c2bg);border:1px solid rgba(184,149,106,.18)}
+.pcard.c3{background:var(--c3bg);border:1px solid rgba(106,139,153,.14)}
+.pck{display:flex;align-items:center;gap:5px;margin-bottom:3px}
+.pcdot{width:4px;height:4px;border-radius:50%}
+.pckt{font-size:8px;font-weight:500;letter-spacing:.06em}
+.pch{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:var(--text);line-height:1.2;margin-bottom:3px}
+.pcb{font-size:9px;color:var(--text2);line-height:1.5}
+.prec{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:14px}
+.ptimer{font-family:'Cormorant Garamond',serif;font-size:46px;color:var(--text);letter-spacing:-.04em;line-height:1}
+.pwav{display:flex;align-items:center;gap:2.5px;height:36px}
+.pwav span{display:inline-block;width:2px;background:var(--accent);border-radius:2px}
+.pwav span:nth-child(1){height:10px;animation:pw 1.1s ease-in-out infinite}
+.pwav span:nth-child(2){height:22px;animation:pw 1.1s ease-in-out infinite .07s}
+.pwav span:nth-child(3){height:32px;animation:pw 1.1s ease-in-out infinite .14s}
+.pwav span:nth-child(4){height:26px;animation:pw 1.1s ease-in-out infinite .1s}
+.pwav span:nth-child(5){height:36px;animation:pw 1.1s ease-in-out infinite .21s}
+.pwav span:nth-child(6){height:28px;animation:pw 1.1s ease-in-out infinite .04s}
+.pwav span:nth-child(7){height:18px;animation:pw 1.1s ease-in-out infinite .17s}
+.pwav span:nth-child(8){height:30px;animation:pw 1.1s ease-in-out infinite .08s}
+.pwav span:nth-child(9){height:14px;animation:pw 1.1s ease-in-out infinite .25s}
+@keyframes pw{0%,100%{transform:scaleY(1);opacity:.7}50%{transform:scaleY(.3);opacity:.25}}
+.ppartial{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:var(--text3);text-align:center;line-height:1.4;max-width:150px}
+.pstate-rec{display:flex;flex-direction:column;flex:1}
+.pstate-res{display:none;flex-direction:column}
+.phone-wrap.show-res .pstate-rec{display:none}
+.phone-wrap.show-res .pstate-res{display:flex}
+.ptoggle{margin-top:18px;display:flex;gap:7px;justify-content:center}
+.ptoggle button{width:7px;height:7px;border-radius:50%;border:none;cursor:pointer;background:var(--div);transition:background .2s}
+.ptoggle button.active{background:var(--accent)}
+
+/* LOOP */
+.loop-sec{background:var(--bg2)}
+.loop-hdr{margin-bottom:clamp(36px,5vw,56px)}
+.loop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.ls{background:var(--bg);padding:clamp(22px,2.5vw,34px) clamp(18px,2vw,26px);position:relative;opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
+.ls.vis{opacity:1;transform:translateY(0)}
+.ls:first-child{border-radius:var(--r) 0 0 var(--r)}.ls:last-child{border-radius:0 var(--r) var(--r) 0}
+.ls-arr{position:absolute;right:-13px;top:50%;transform:translateY(-50%);width:26px;height:26px;background:var(--bg2);border:1px solid var(--div);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2}
+.ls-arr svg{width:11px;height:11px;stroke:var(--text3);fill:none;stroke-width:2;stroke-linecap:round}
+.ls:last-child .ls-arr{display:none}
+.ls-n{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:400;color:var(--text3);opacity:.35;line-height:1;margin-bottom:16px}
+.ls-ico{width:34px;height:34px;background:var(--a2);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.ls-ico svg{width:17px;height:17px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ls-t{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--text);margin-bottom:8px;line-height:1.2}
+.ls-b{font-size:13px;color:var(--text2);line-height:1.6}
+@media(max-width:880px){.loop-grid{grid-template-columns:1fr 1fr;gap:2px}.ls:nth-child(1){border-radius:var(--r) 0 0 0}.ls:nth-child(2){border-radius:0 var(--r) 0 0}.ls:nth-child(3){border-radius:0 0 0 var(--r)}.ls:nth-child(4){border-radius:0 0 var(--r) 0}.ls-arr{display:none!important}}
+@media(max-width:520px){.loop-grid{grid-template-columns:1fr}.ls:first-child{border-radius:var(--r) var(--r) 0 0}.ls:last-child{border-radius:0 0 var(--r) var(--r)}.ls:not(:first-child):not(:last-child){border-radius:0}}
+
+/* DEMO */
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,56px);align-items:start}
+@media(max-width:740px){.demo-grid{grid-template-columns:1fr}}
+.demo-h2{font-size:clamp(26px,3.2vw,40px);margin:14px 0 18px}
+.spoken-box{background:var(--bg2);border-radius:var(--r);padding:18px 20px;margin-bottom:24px}
+.sp-tag{font-size:10px;font-weight:500;letter-spacing:.07em;color:var(--text3);margin-bottom:9px}
+.sp-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--text2);line-height:1.55}
+.sp-wav{display:flex;align-items:center;gap:3px;height:22px;margin-top:12px}
+.sp-wav span{display:inline-block;width:2.5px;background:var(--accent);border-radius:2px;opacity:.5}
+.sp-wav span:nth-child(1){height:7px;animation:wave 1.2s ease-in-out infinite}
+.sp-wav span:nth-child(2){height:15px;animation:wave 1.2s ease-in-out infinite .1s}
+.sp-wav span:nth-child(3){height:21px;animation:wave 1.2s ease-in-out infinite .2s}
+.sp-wav span:nth-child(4){height:13px;animation:wave 1.2s ease-in-out infinite .15s}
+.sp-wav span:nth-child(5){height:19px;animation:wave 1.2s ease-in-out infinite .25s}
+.sp-wav span:nth-child(6){height:11px;animation:wave 1.2s ease-in-out infinite .05s}
+.sp-wav span:nth-child(7){height:17px;animation:wave 1.2s ease-in-out infinite .3s}
+.sp-wav span:nth-child(8){height:9px;animation:wave 1.2s ease-in-out infinite .2s}
+.sp-wav span:nth-child(9){height:15px;animation:wave 1.2s ease-in-out infinite .1s}
+.sp-wav span:nth-child(10){height:19px;animation:wave 1.2s ease-in-out infinite .35s}
+@keyframes wave{0%,100%{transform:scaleY(1);opacity:.5}50%{transform:scaleY(.35);opacity:.2}}
+.demo-arr{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text3);margin-bottom:18px;opacity:0;transform:translateY(7px);transition:opacity .5s,transform .5s}
+.demo-arr.vis{opacity:1;transform:translateY(0)}
+.demo-arr::before{content:'';width:26px;height:1px;background:var(--accent);flex-shrink:0}
+.ic{border-radius:18px;padding:20px;opacity:0;transform:translateY(11px);transition:opacity .5s,transform .5s}
+.ic.vis{opacity:1;transform:translateY(0)}
+.ic-stack{display:flex;flex-direction:column;gap:10px}
+.ic.i1{background:var(--c1bg);border:1px solid rgba(123,169,154,.15)}
+.ic.i2{background:var(--c2bg);border:1px solid rgba(184,149,106,.15)}
+.ic.i3{background:var(--c3bg);border:1px solid rgba(106,139,153,.12)}
+.ick{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.icdot{width:5px;height:5px;border-radius:50%}
+.icklbl{font-size:10px;font-weight:500;letter-spacing:.06em}
+.ich{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--text);letter-spacing:-.01em;line-height:1.2;margin-bottom:7px}
+.icb{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* MEMORY */
+.mem-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center}
+@media(max-width:720px){.mem-grid{grid-template-columns:1fr}}
+.mem-txt{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.mem-txt.vis{opacity:1;transform:translateY(0)}
+.mem-h2{font-size:clamp(30px,3.8vw,46px);margin:14px 0 18px}
+.mem-body{font-size:15px;color:var(--text2);line-height:1.75;margin-bottom:28px}
+.ptags{display:flex;flex-wrap:wrap;gap:9px;opacity:0;transition:opacity .6s .2s}
+.ptags.vis{opacity:1}
+.ptag{font-family:'Cormorant Garamond',serif;font-style:italic;padding:7px 15px;border-radius:var(--rp);color:var(--text2)}
+.ptag.lg{font-size:17px;border:1px solid rgba(44,56,48,.14);color:var(--text)}
+.ptag.md{font-size:15px;border:1px solid var(--a3)}
+.ptag.sm{font-size:13px;border:1px solid var(--a2);opacity:.7}
+.mem-vis{position:relative;height:300px;opacity:0;transform:translateY(14px);transition:opacity .6s .12s,transform .6s .12s}
+.mem-vis.vis{opacity:1;transform:translateY(0)}
+.mvc{position:absolute;width:100%;background:var(--bg2);border-radius:18px;padding:18px 20px;border:1px solid var(--div)}
+.mvc:nth-child(1){top:0;transform:rotate(-2deg);opacity:.35}
+.mvc:nth-child(2){top:24px;transform:rotate(.7deg);opacity:.6}
+.mvc:nth-child(3){top:48px;transform:rotate(0);opacity:1;background:var(--bg)}
+.mvdate{font-size:9px;font-weight:500;letter-spacing:.06em;color:var(--text3);margin-bottom:7px}
+.mventry{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--text2);line-height:1.5;margin-bottom:12px}
+.mvtag{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:500;letter-spacing:.05em;color:var(--accent);background:var(--a2);padding:5px 11px;border-radius:var(--rp)}
+.mvtag::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+/* DIFF */
+.diff-sec{background:var(--bg2)}
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.dc{background:var(--bg);padding:clamp(26px,3vw,38px) clamp(22px,2.5vw,30px);opacity:0;transform:translateY(11px);transition:opacity .5s,transform .5s}
+.dc.vis{opacity:1;transform:translateY(0)}
+.dc:first-child{border-radius:var(--r) 0 0 var(--r)}.dc:last-child{border-radius:0 var(--r) var(--r) 0}
+.dc-ico{width:38px;height:38px;background:var(--a2);border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.dc-ico svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.dc-t{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--text);margin-bottom:9px;line-height:1.2}
+.dc-b{font-size:13px;color:var(--text2);line-height:1.65}
+@media(max-width:680px){.diff-grid{grid-template-columns:1fr}.dc:first-child{border-radius:var(--r) var(--r) 0 0}.dc:last-child{border-radius:0 0 var(--r) var(--r)}.dc:not(:first-child):not(:last-child){border-radius:0}}
+
+/* PRICING */
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,60px);align-items:start}
+@media(max-width:700px){.price-grid{grid-template-columns:1fr}}
+.pt{opacity:0;transform:translateY(11px);transition:opacity .5s,transform .5s}.pt.vis{opacity:1;transform:translateY(0)}
+.pt h2{font-size:clamp(30px,3.8vw,46px);margin:14px 0 18px}
+.pt p{font-size:15px;color:var(--text2);line-height:1.75}
+.pcard{background:var(--bg2);border-radius:22px;padding:clamp(26px,3vw,38px);border:1px solid var(--div);opacity:0;transform:translateY(11px);transition:opacity .5s .1s,transform .5s .1s}
+.pcard.vis{opacity:1;transform:translateY(0)}
+.pamt{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:50px;color:var(--text);letter-spacing:-.04em;line-height:1}
+.pper{font-size:12px;color:var(--text3);margin-top:4px;margin-bottom:26px;letter-spacing:.02em}
+.pdiv{height:1px;background:var(--div);margin-bottom:22px}
+.pfeats{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:28px}
+.pfeat{display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--text2);line-height:1.5}
+.pfeat::before{content:'';width:2px;min-height:16px;background:var(--accent);border-radius:2px;flex-shrink:0;margin-top:2px}
+.plegal{font-size:11px;color:var(--text3);text-align:center;margin-top:11px;letter-spacing:.02em}
+
+/* WAITLIST */
+.wl-sec{background:var(--text);color:var(--bg)}
+.wl-inner{max-width:600px}
+.wl-h2{font-size:clamp(34px,5vw,58px);color:var(--bg);margin:14px 0 18px;line-height:1.05}
+.wl-sub{font-size:15px;color:rgba(247,244,238,.5);line-height:1.7;max-width:440px}
+.wl-form{display:flex;gap:11px;margin-top:28px;flex-wrap:wrap}
+.wl-inp{flex:1;min-width:210px;background:rgba(247,244,238,.07);border:1px solid rgba(247,244,238,.14);border-radius:var(--rp);padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--bg);outline:none;transition:border-color .2s}
+.wl-inp::placeholder{color:rgba(247,244,238,.3)}.wl-inp:focus{border-color:var(--accent)}
+.wl-btn{background:var(--accent);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 26px;border-radius:var(--rp);border:none;cursor:pointer;transition:opacity .2s;white-space:nowrap}.wl-btn:hover{opacity:.8}
+.wl-ty{display:none;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:rgba(247,244,238,.6);margin-top:22px}
+.wl-leg{font-size:11px;color:rgba(247,244,238,.28);margin-top:14px;letter-spacing:.02em}
+
+/* FOOTER */
+footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:11px;border-top:1px solid var(--div)}
+.flogo{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;letter-spacing:-.03em}
+.fnote{font-size:12px;color:var(--text3)}
+
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
-
 <body>
 
-<!-- ── Nav ──────────────────────────────── -->
 <nav>
-  <a href="#" class="nav-logo">hayley</a>
-  <a href="#waitlist" class="nav-cta">get early access</a>
+  <a href="#" class="nl cg">hayley</a>
+  <div class="nlinks">
+    <a href="#how" class="nlink">how it works</a>
+    <a href="#pricing" class="nlink">pricing</a>
+    <a href="#waitlist" class="ncta">start thinking</a>
+  </div>
 </nav>
 
-<!-- ── Hero ─────────────────────────────── -->
-<section style="padding-top: 0; padding-bottom: 0;">
-  <div class="container">
-    <div class="hero">
+<!-- HERO -->
+<section class="hero">
+<div class="wrap">
+<div class="hero-grid">
+  <div>
+    <div class="eyebrow he"><span class="dot"></span><span class="lbl">a voice thinking companion for iOS</span></div>
+    <h1 class="cg h1 he">think more<br>clearly.</h1>
+    <div class="rule he"></div>
+    <p class="cgi hsub he">Speak for sixty seconds. Hayley reflects what you're really saying.</p>
+    <p class="hclar he">Not voice notes. Not AI chat. A companion that listens, identifies what's underneath, and builds a picture of how you think — over time.</p>
+    <div class="hacts he">
+      <a href="#waitlist" class="bd">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        start thinking — it's free
+      </a>
+      <a href="#how" class="bg">see how it works →</a>
+    </div>
+  </div>
 
-      <div class="hero-content">
-        <div class="hero-eyebrow">
-          <span class="dot"></span>
-          <span class="t-label">a thinking companion</span>
-        </div>
-
-        <h1 class="t-display hero-headline">
-          say what's<br>on your mind.
-        </h1>
-
-        <div class="hero-rule"></div>
-
-        <p class="t-italic hero-sub" style="animation-delay: 0.4s;">
-          hayley listens, reflects, and surfaces what you haven't quite said yet.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#waitlist" class="btn-primary">
-            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-            get early access
-          </a>
-          <a href="#how" class="btn-ghost">see how it works ↓</a>
-        </div>
-      </div>
-
-      <div class="mockup-wrap">
-        <div class="phone">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div class="phone-date">friday, may 8</div>
-            <div class="phone-title">entry</div>
-            <div class="phone-rule"></div>
-            <div class="phone-label">insights</div>
-            <div class="phone-cards">
-              <div class="phone-card c1">
-                <div class="pc-kind">
-                  <div class="pc-dot" style="background:var(--dot1)"></div>
-                  <span class="pc-kind-text" style="color:var(--dot1)">insight</span>
-                </div>
-                <div class="pc-headline">performing calm</div>
-                <div class="pc-body">A gap between outward composure and what's actually happening underneath.</div>
+  <div class="hv">
+    <div class="phone-wrap" id="pm">
+      <div class="phone">
+        <div class="pnotch"></div>
+        <div class="pscreen">
+          <div class="pstate-rec">
+            <div style="display:flex;justify-content:space-between;margin-bottom:2px">
+              <span class="pdate" style="opacity:.4">cancel</span><span class="pdate">42s</span>
+            </div>
+            <div class="prec">
+              <div class="ptimer">0:18</div>
+              <div class="pwav"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+              <div class="ppartial">"I keep going back and forth and I can't seem to…"</div>
+            </div>
+          </div>
+          <div class="pstate-res">
+            <div class="pdate">friday, may 9</div>
+            <div class="ptitle">entry</div>
+            <div class="prule"></div>
+            <div class="plabel">insights</div>
+            <div class="pcards">
+              <div class="pcard c1">
+                <div class="pck"><div class="pcdot" style="background:var(--c1)"></div><span class="pckt" style="color:var(--c1)">insight</span></div>
+                <div class="pch">searching for permission, not information</div>
+                <div class="pcb">The indecision isn't about the options — you already know.</div>
               </div>
-              <div class="phone-card c2">
-                <div class="pc-kind">
-                  <div class="pc-dot" style="background:var(--dot2)"></div>
-                  <span class="pc-kind-text" style="color:var(--dot2)">pattern</span>
-                </div>
-                <div class="pc-headline">surface management</div>
-                <div class="pc-body">Third time using architectural metaphors for emotion. Worth noting.</div>
+              <div class="pcard c2">
+                <div class="pck"><div class="pcdot" style="background:var(--c2)"></div><span class="pckt" style="color:var(--c2)">pattern</span></div>
+                <div class="pch">paralysis before committing</div>
+                <div class="pcb">Fourth time this month. Regret of inaction is underweighted.</div>
               </div>
-              <div class="phone-card c3">
-                <div class="pc-kind">
-                  <div class="pc-dot" style="background:var(--dot3)"></div>
-                  <span class="pc-kind-text" style="color:var(--dot3)">question</span>
-                </div>
-                <div class="pc-headline">what is the friction pointing at?</div>
-                <div class="pc-body">Where in your body is it sitting right now?</div>
+              <div class="pcard c3">
+                <div class="pck"><div class="pcdot" style="background:var(--c3)"></div><span class="pckt" style="color:var(--c3)">question</span></div>
+                <div class="pch">what if no one was watching?</div>
+                <div class="pcb">Strip away what you think you should want.</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ── How It Works ──────────────────────── -->
-<section id="how">
-  <div class="container">
-    <p class="t-label" style="margin-bottom: 32px;">how it works</p>
-
-    <div class="how-grid">
-      <div class="how-step">
-        <div class="how-num">01</div>
-        <div class="how-content">
-          <div class="how-title">speak for sixty seconds</div>
-          <p class="how-body">No prompts. No structure. Just tap and talk. Say whatever is on your mind — unfiltered, unedited. Hayley transcribes in real time as you speak.</p>
-        </div>
-      </div>
-
-      <div class="how-step">
-        <div class="how-num">02</div>
-        <div class="how-content">
-          <div class="how-title">receive a real reflection</div>
-          <p class="how-body">Not a summary. Not a restatement. Hayley surfaces the thing you were circling — names the emotional state, identifies the pattern, asks the question you hadn't thought to ask.</p>
-        </div>
-      </div>
-
-      <div class="how-step">
-        <div class="how-num">03</div>
-        <div class="how-content">
-          <div class="how-title">patterns emerge over time</div>
-          <p class="how-body">Each entry builds context. After a few sessions, hayley starts noticing what you consistently avoid, what language you reach for under pressure, what keeps coming back.</p>
-        </div>
-      </div>
-
-      <div class="how-step">
-        <div class="how-num">04</div>
-        <div class="how-content">
-          <div class="how-title">one step, each week</div>
-          <p class="how-body">A weekly reflection surfaces what slowed you down, what you sidestepped, and — without judgement — one concrete thing to try differently.</p>
-        </div>
+      <div class="ptoggle">
+        <button class="active" id="pb0" onclick="ps(0)"></button>
+        <button id="pb1" onclick="ps(1)"></button>
       </div>
     </div>
   </div>
+</div>
+</div>
 </section>
 
-<div class="divider"></div>
+<div class="div"></div>
 
-<!-- ── Insight Example ────────────────────── -->
-<section class="insight-section">
-  <div class="container">
-    <div class="insight-intro">
-      <p class="t-label" style="margin-bottom: 20px;">what hayley notices</p>
-      <h2 class="t-italic" style="font-size: clamp(28px, 5vw, 42px); color: var(--text); margin-bottom: 16px;">
-        "I keep going back and forth and I can't make a decision."
-      </h2>
-      <p style="font-size: 14px; color: var(--text3); font-style: italic;">— a real entry, stripped of identifying detail</p>
+<!-- THE LOOP -->
+<section class="loop-sec" id="how">
+<div class="wrap">
+  <div class="loop-hdr">
+    <p class="lbl" style="margin-bottom:14px">the interaction loop</p>
+    <h2 class="cg" style="font-size:clamp(30px,3.8vw,46px);max-width:500px">four steps.<br>sixty seconds to the first insight.</h2>
+  </div>
+  <div class="loop-grid">
+    <div class="ls" style="transition-delay:.04s">
+      <div class="ls-arr"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
+      <div class="ls-n">01</div>
+      <div class="ls-ico"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
+      <div class="ls-t">speak naturally</div>
+      <p class="ls-b">Tap. Talk. No prompts, no structure. Just say what's on your mind — up to sixty seconds.</p>
     </div>
-
-    <div class="insight-cards">
-      <div class="insight-card" style="transition-delay: 0.1s;">
-        <div class="ic-kind">
-          <div class="ic-dot" style="background:var(--dot1)"></div>
-          <span class="ic-label" style="color:var(--dot1)">insight</span>
-        </div>
-        <div class="ic-headline">decision fatigue masking clarity</div>
-        <p class="ic-body">The indecision isn't about the options — it's about not trusting the instinct you already have. You're searching for permission, not information.</p>
-      </div>
-
-      <div class="insight-card" style="transition-delay: 0.22s;">
-        <div class="ic-kind">
-          <div class="ic-dot" style="background:var(--dot2)"></div>
-          <span class="ic-label" style="color:var(--dot2)">pattern</span>
-        </div>
-        <div class="ic-headline">paralysis before committing</div>
-        <p class="ic-body">This is the fourth session this month where a decision loop appears. The stakes feel high in the moment, but the regret of inaction is consistently underweighted.</p>
-      </div>
-
-      <div class="insight-card" style="transition-delay: 0.34s;">
-        <div class="ic-kind">
-          <div class="ic-dot" style="background:var(--dot3)"></div>
-          <span class="ic-label" style="color:var(--dot3)">question</span>
-        </div>
-        <div class="ic-headline">what would you choose if no one was watching?</div>
-        <p class="ic-body">Strip away what you think you should want. Ignore the audience. What does the decision look like then?</p>
-      </div>
+    <div class="ls" style="transition-delay:.13s">
+      <div class="ls-arr"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
+      <div class="ls-n">02</div>
+      <div class="ls-ico"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <div class="ls-t">hayley reflects</div>
+      <p class="ls-b">Three cards: an insight about what you're really saying, a pattern, and one question worth sitting with.</p>
+    </div>
+    <div class="ls" style="transition-delay:.22s">
+      <div class="ls-arr"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
+      <div class="ls-n">03</div>
+      <div class="ls-ico"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="ls-t">patterns emerge</div>
+      <p class="ls-b">Each entry builds context. Hayley notices recurring language, emotional patterns, and what keeps surfacing.</p>
+    </div>
+    <div class="ls" style="transition-delay:.31s">
+      <div class="ls-n">04</div>
+      <div class="ls-ico"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+      <div class="ls-t">memory deepens</div>
+      <p class="ls-b">Weekly reflections surface what slowed you, what you avoided, one next step. Context that builds over months.</p>
     </div>
   </div>
+</div>
 </section>
 
-<div class="divider"></div>
+<div class="div"></div>
 
-<!-- ── Memory ─────────────────────────────── -->
+<!-- DEMO -->
 <section>
-  <div class="container">
-    <div class="memory-intro">
-      <p class="t-label" style="margin-bottom: 24px;">pattern memory</p>
-      <h2 class="t-italic memory-headline">
-        it starts to<br>notice things.
-      </h2>
-      <p class="memory-body">
-        After a few sessions, hayley builds a picture — not of events, but of how you think. The language you reach for under pressure. The things you consistently sidestep. The gap between what you say and what you mean.
-      </p>
-
-      <p class="t-label" style="margin-bottom: 16px; color: var(--text3);">patterns identified across sessions</p>
-      <div class="pattern-tags">
-        <span class="pattern-tag strong">weighing safety vs growth</span>
-        <span class="pattern-tag strong">overthinking before deciding</span>
-        <span class="pattern-tag">pressure to meet expectations</span>
-        <span class="pattern-tag">emotional understatement</span>
-        <span class="pattern-tag">clarity seeking</span>
+<div class="wn">
+  <div class="demo-grid">
+    <div>
+      <p class="lbl">a real reflection</p>
+      <h2 class="cgi demo-h2">what hayley actually says back</h2>
+      <div class="spoken-box">
+        <div class="sp-tag">you said</div>
+        <div class="sp-text">"I keep going back and forth and I can't make a decision. I don't know if I'm overthinking it or if there's something I'm missing."</div>
+        <div class="sp-wav"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="demo-arr">hayley noticed</div>
+    </div>
+    <div class="ic-stack">
+      <div class="ic i1" style="transition-delay:.08s">
+        <div class="ick"><div class="icdot" style="background:var(--c1)"></div><span class="icklbl" style="color:var(--c1)">insight</span></div>
+        <div class="ich">searching for permission, not information</div>
+        <p class="icb">The indecision isn't about the options — it's about not trusting the instinct you already have. You're waiting for someone to tell you what you already know.</p>
+      </div>
+      <div class="ic i2" style="transition-delay:.2s">
+        <div class="ick"><div class="icdot" style="background:var(--c2)"></div><span class="icklbl" style="color:var(--c2)">pattern detected</span></div>
+        <div class="ich">paralysis before committing</div>
+        <p class="icb">Fourth session this month where a decision loop appears. The stakes feel high in the moment, but the regret of inaction is consistently underweighted.</p>
+      </div>
+      <div class="ic i3" style="transition-delay:.32s">
+        <div class="ick"><div class="icdot" style="background:var(--c3)"></div><span class="icklbl" style="color:var(--c3)">question</span></div>
+        <div class="ich">what would you choose if no one was watching?</div>
+        <p class="icb">Strip away what you think you should want. Ignore the audience. What does the decision look like then?</p>
       </div>
     </div>
   </div>
+</div>
 </section>
 
-<div class="divider"></div>
+<div class="div"></div>
 
-<!-- ── Pricing ────────────────────────────── -->
-<section style="background: var(--bg2);">
-  <div class="container">
-    <p class="t-label" style="margin-bottom: 32px;">simple pricing</p>
-
-    <div class="pricing-card">
-      <div class="price-amount">€5.99</div>
-      <div class="price-period">per month — 7 days free, cancel anytime</div>
-      <div class="price-rule"></div>
-      <ul class="price-features">
-        <li class="price-feature">Unlimited voice entries, up to 60 seconds each</li>
-        <li class="price-feature">Real-time transcription, fully on-device</li>
-        <li class="price-feature">AI-powered insight, pattern, and question after each entry</li>
-        <li class="price-feature">Pattern memory that builds across sessions</li>
-        <li class="price-feature">Weekly reflection — what slowed you, what you avoided, one next step</li>
-      </ul>
-      <a href="#waitlist" class="btn-primary" style="width: 100%; justify-content: center;">
-        start free trial
-      </a>
-      <p class="price-trial">no commitment during the trial. cancel in one tap.</p>
+<!-- MEMORY -->
+<section>
+<div class="wrap">
+  <div class="mem-grid">
+    <div class="mem-txt">
+      <p class="lbl">pattern memory</p>
+      <h2 class="cg mem-h2">it starts to<br>notice things.</h2>
+      <p class="mem-body">After a few sessions, hayley builds a picture — not of events, but of how you think. The language you reach for under pressure. What you consistently sidestep. The gap between what you say and what you mean.</p>
+      <p class="lbl" style="margin-bottom:13px">patterns identified across your sessions</p>
+      <div class="ptags">
+        <span class="ptag lg">weighing safety vs growth</span>
+        <span class="ptag lg">overthinking before deciding</span>
+        <span class="ptag md">pressure to meet expectations</span>
+        <span class="ptag md">emotional understatement</span>
+        <span class="ptag sm">clarity seeking</span>
+        <span class="ptag sm">surface management</span>
+      </div>
+    </div>
+    <div class="mem-vis">
+      <div class="mvc"><div class="mvdate">monday, apr 28</div><div class="mventry">"I keep saying yes to things I don't actually want to do…"</div><span class="mvtag">pressure to meet expectations</span></div>
+      <div class="mvc"><div class="mvdate">thursday, may 1</div><div class="mventry">"There's a gap between how I present and what's actually happening…"</div><span class="mvtag">surface management</span></div>
+      <div class="mvc"><div class="mvdate">friday, may 9</div><div class="mventry">"I can't make a decision. I don't know if I'm overthinking it…"</div><span class="mvtag">paralysis before committing</span></div>
     </div>
   </div>
+</div>
 </section>
 
-<div class="divider"></div>
+<div class="div"></div>
 
-<!-- ── Waitlist ───────────────────────────── -->
-<section class="waitlist-section" id="waitlist">
-  <div class="container">
-    <p class="t-label" style="margin-bottom: 24px; color: rgba(247,244,238,0.4);">early access</p>
-    <h2 class="t-italic" style="font-size: clamp(32px, 6vw, 52px); margin-bottom: 16px;">
-      think more clearly,<br>starting this week.
-    </h2>
-    <p style="font-size: 15px; line-height: 1.65; max-width: 440px;">
-      Hayley is launching soon on iOS. Leave your email and we'll let you know when it's ready — no noise, one message.
-    </p>
-
-    <form class="waitlist-form" id="waitlistForm">
-      <input
-        type="email"
-        class="waitlist-input"
-        placeholder="your email"
-        required
-        id="emailInput"
-      >
-      <button type="submit" class="waitlist-btn">join waitlist</button>
-    </form>
-    <p class="waitlist-thanks" id="waitlistThanks">
-      you're on the list. we'll be in touch.
-    </p>
+<!-- DIFF -->
+<section class="diff-sec">
+<div class="wrap">
+  <p class="lbl" style="margin-bottom:36px">why hayley is different</p>
+  <div class="diff-grid">
+    <div class="dc" style="transition-delay:.04s">
+      <div class="dc-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="dc-t">not a chatbot</div>
+      <p class="dc-b">Hayley doesn't respond conversationally. It reflects. The difference is in the quality of attention — it's looking for what you haven't quite said, not just what you said.</p>
+    </div>
+    <div class="dc" style="transition-delay:.14s">
+      <div class="dc-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div class="dc-t">not voice notes</div>
+      <p class="dc-b">Voice notes replay what you said. Hayley surfaces what it means. The difference between recording a thought and processing one.</p>
+    </div>
+    <div class="dc" style="transition-delay:.24s">
+      <div class="dc-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <div class="dc-t">not therapy</div>
+      <p class="dc-b">No techniques, no exercises. Just a thinking companion paying close attention, session after session, without agenda or judgement.</p>
+    </div>
   </div>
+</div>
 </section>
 
-<!-- ── Footer ────────────────────────────── -->
+<div class="div"></div>
+
+<!-- PRICING -->
+<section id="pricing">
+<div class="wrap">
+  <div class="price-grid">
+    <div class="pt">
+      <p class="lbl">simple pricing</p>
+      <h2 class="cg">one plan.<br>no tiers.</h2>
+      <p style="font-size:15px;color:var(--text2);line-height:1.75">Everything hayley does — unlimited entries, pattern memory, weekly reflections — included from day one. The 7-day trial is genuinely free. No card required to start.</p>
+    </div>
+    <div class="pcard">
+      <div class="pamt">€5.99</div>
+      <div class="pper">per month after 7-day free trial</div>
+      <div class="pdiv"></div>
+      <ul class="pfeats">
+        <li class="pfeat">Unlimited voice entries, up to 60 seconds each</li>
+        <li class="pfeat">Insight, pattern, and question after every entry</li>
+        <li class="pfeat">Pattern memory that builds across sessions</li>
+        <li class="pfeat">Weekly reflection — what slowed you, what you avoided</li>
+        <li class="pfeat">On-device transcription — nothing leaves your phone</li>
+      </ul>
+      <a href="#waitlist" class="bd" style="width:100%;justify-content:center;display:flex">start thinking — it's free</a>
+      <p class="plegal">cancel in one tap. billed monthly after trial.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="div"></div>
+
+<!-- WAITLIST -->
+<section class="wl-sec" id="waitlist">
+<div class="wrap">
+  <div class="wl-inner">
+    <p class="lbl" style="color:rgba(247,244,238,.3)">early access</p>
+    <h2 class="cgi wl-h2">start thinking<br>more clearly.</h2>
+    <p class="wl-sub">Hayley is launching on iOS soon. Leave your email — one message when it's ready, nothing else.</p>
+    <form class="wl-form" id="wlf">
+      <input type="email" class="wl-inp" placeholder="your email address" required id="wle">
+      <button type="submit" class="wl-btn">join waitlist</button>
+    </form>
+    <p class="wl-ty" id="wlt">you're on the list. we'll be in touch.</p>
+    <p class="wl-leg">no spam. one email. unsubscribe instantly.</p>
+  </div>
+</div>
+</section>
+
 <footer>
-  <span class="footer-logo">hayley</span>
-  <span class="footer-note">a thinking companion for iOS · coming soon</span>
+  <span class="flogo cg">hayley</span>
+  <span class="fnote">a thinking companion · iOS · coming soon</span>
 </footer>
 
 <script>
-  // ── Scroll reveal ─────────────────────────
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.12 });
+// Phone toggle
+function ps(n){
+  document.getElementById('pb0').classList.toggle('active',n===0);
+  document.getElementById('pb1').classList.toggle('active',n===1);
+  document.getElementById('pm').classList.toggle('show-res',n===1);
+}
+let cyc=0;setInterval(()=>{cyc=(cyc+1)%2;ps(cyc)},4000);
 
-  document.querySelectorAll(
-    '.how-step, .insight-intro, .insight-card, .memory-intro, .pattern-tags, .pricing-card'
-  ).forEach(el => observer.observe(el));
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
+},{threshold:0.1});
+document.querySelectorAll('.ls,.ic,.dc,.mem-txt,.mem-vis,.ptags,.pt,.pcard,.demo-arr').forEach(el=>obs.observe(el));
 
-  // ── Waitlist form ─────────────────────────
-  document.getElementById('waitlistForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const email = document.getElementById('emailInput').value;
+// Waitlist
+document.getElementById('wlf').addEventListener('submit',function(e){
+  e.preventDefault();
+  // fetch('https://formspree.io/f/YOUR_ID',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('wle').value})});
+  this.style.display='none';
+  document.getElementById('wlt').style.display='block';
+});
 
-    // Replace this with your actual form handler (Mailchimp, Resend, Formspree etc.)
-    // For now just show the thank you message
-    console.log('Waitlist signup:', email);
-
-    this.style.display = 'none';
-    document.getElementById('waitlistThanks').style.display = 'block';
-  });
-
-  // ── Smooth anchor scroll ──────────────────
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
+// Nav highlight
+const secs=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  let cur='';secs.forEach(s=>{if(scrollY>=s.offsetTop-80)cur=s.id});
+  document.querySelectorAll('.nlink').forEach(l=>{l.style.color=l.getAttribute('href')==='#'+cur?'var(--text)':''});
+},{passive:true});
 </script>
-
 </body>
 </html>
