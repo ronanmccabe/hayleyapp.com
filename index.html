@@ -493,11 +493,22 @@ const obs=new IntersectionObserver(entries=>{
 document.querySelectorAll('.ls,.ic,.dc,.mem-txt,.mem-vis,.ptags,.pt,.pcard,.demo-arr').forEach(el=>obs.observe(el));
 
 // Waitlist
-document.getElementById('wlf').addEventListener('submit',function(e){
+// *** ADD YOUR LOOPS API KEY BELOW — replace REPLACE_WITH_YOUR_LOOPS_API_KEY ***
+document.getElementById('wlf').addEventListener('submit', async function(e) {
   e.preventDefault();
-  // fetch('https://formspree.io/f/YOUR_ID',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('wle').value})});
-  this.style.display='none';
-  document.getElementById('wlt').style.display='block';
+  const email = document.getElementById('wle').value;
+  try {
+    await fetch('https://app.loops.so/api/v1/contacts/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': '9b10e82ea1210dd63803df190ef808e1'
+      },
+      body: JSON.stringify({ email, source: 'website-waitlist' })
+    });
+  } catch(err) { console.error('Loops error:', err); }
+  this.style.display = 'none';
+  document.getElementById('wlt').style.display = 'block';
 });
 
 // Nav highlight
