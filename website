@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hayley — a thinking companion</title>
+<meta name="description" content="Speak for sixty seconds. Hayley listens, reflects, and surfaces what you haven't quite said yet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ─── Tokens ─────────────────────────────── */
+  :root {
+    --bg:        #F7F4EE;
+    --bg2:       #EEF2F0;
+    --bg3:       #E8EDE9;
+    --text:      #2C3830;
+    --text2:     #5A6B62;
+    --text3:     #8FA498;
+    --accent:    #7BA99A;
+    --accent2:   rgba(123,169,154,0.15);
+    --accent3:   rgba(123,169,154,0.35);
+    --divider:   rgba(44,56,48,0.08);
+    --dot1:      #7BA99A;
+    --dot2:      #B8956A;
+    --dot3:      #6A8B99;
+    --card1:     rgba(123,169,154,0.10);
+    --card2:     rgba(184,169,154,0.12);
+    --card3:     rgba(154,176,169,0.10);
+  }
+
+  /* ─── Reset ──────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── Typography ─────────────────────────── */
+  .t-display {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .t-italic {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .t-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    color: var(--text3);
+  }
+
+  /* ─── Layout ─────────────────────────────── */
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  section { padding: 80px 0; }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--divider);
+  }
+
+  /* ─── Nav ────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--divider);
+    padding: 0 28px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    text-decoration: none;
+  }
+
+  .nav-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--bg);
+    background: var(--text);
+    padding: 8px 20px;
+    border-radius: 999px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: opacity 0.2s;
+  }
+
+  .nav-cta:hover { opacity: 0.75; }
+
+  /* ─── Hero ───────────────────────────────── */
+  .hero {
+    padding-top: 140px;
+    padding-bottom: 80px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.1s;
+  }
+
+  .hero-eyebrow .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .hero-headline {
+    font-size: clamp(44px, 8vw, 72px);
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.25s;
+  }
+
+  .hero-sub {
+    font-size: clamp(18px, 3vw, 22px);
+    color: var(--text2);
+    line-height: 1.5;
+    max-width: 480px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.45s;
+  }
+
+  .hero-rule {
+    width: 32px;
+    height: 1.5px;
+    background: var(--accent);
+    margin: 8px 0 0;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.35s;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards 0.65s;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--text);
+    color: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.75; }
+
+  .btn-primary svg {
+    width: 16px; height: 16px;
+    fill: currentColor;
+  }
+
+  .btn-ghost {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text3);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--text); }
+
+  /* ─── Phone Mockup ───────────────────────── */
+  .mockup-wrap {
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+    display: flex;
+    justify-content: center;
+    padding: 0 0 20px;
+  }
+
+  .phone {
+    width: 240px;
+    background: var(--text);
+    border-radius: 40px;
+    padding: 16px;
+    box-shadow:
+      0 40px 80px rgba(44,56,48,0.18),
+      0 0 0 1px rgba(44,56,48,0.08);
+    position: relative;
+  }
+
+  .phone-notch {
+    width: 80px;
+    height: 8px;
+    background: #1a2019;
+    border-radius: 999px;
+    margin: 0 auto 16px;
+  }
+
+  .phone-screen {
+    background: var(--bg);
+    border-radius: 28px;
+    padding: 24px 20px 28px;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .phone-date {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+
+  .phone-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+
+  .phone-rule { width: 100%; height: 1px; background: var(--divider); margin-bottom: 20px; }
+
+  .phone-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-transform: lowercase;
+    margin-bottom: 12px;
+  }
+
+  .phone-cards { display: flex; flex-direction: column; gap: 8px; }
+
+  .phone-card {
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .phone-card.c1 { background: var(--card1); border: 1px solid rgba(123,169,154,0.15); }
+  .phone-card.c2 { background: var(--card2); border: 1px solid rgba(184,149,106,0.15); }
+  .phone-card.c3 { background: var(--card3); border: 1px solid rgba(106,139,153,0.12); }
+
+  .pc-kind {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+  }
+
+  .pc-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+  }
+
+  .pc-kind-text {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .pc-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .pc-body {
+    font-size: 10px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  /* ─── How It Works ───────────────────────── */
+  .how-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .how-step {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--divider);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .how-step.visible { opacity: 1; transform: translateY(0); }
+  .how-step:last-child { border-bottom: none; }
+
+  .how-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 32px;
+    color: var(--text3);
+    line-height: 1;
+    padding-top: 4px;
+  }
+
+  .how-content {}
+
+  .how-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .how-body {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.65;
+  }
+
+  /* ─── Insight example ────────────────────── */
+  .insight-section { background: var(--bg2); }
+
+  .insight-intro {
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .insight-intro.visible { opacity: 1; transform: translateY(0); }
+
+  .insight-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .insight-card {
+    background: var(--bg);
+    border-radius: 20px;
+    padding: 24px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .insight-card.visible { opacity: 1; transform: translateY(0); }
+
+  .ic-kind {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .ic-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+
+  .ic-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+  }
+
+  .ic-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+
+  .ic-body {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.65;
+  }
+
+  /* ─── Memory section ─────────────────────── */
+  .memory-intro {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .memory-intro.visible { opacity: 1; transform: translateY(0); }
+
+  .memory-headline {
+    font-size: clamp(32px, 5vw, 48px);
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .memory-body {
+    font-size: 16px;
+    color: var(--text2);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 40px;
+  }
+
+  .pattern-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transition: opacity 0.5s 0.2s;
+  }
+
+  .pattern-tags.visible { opacity: 1; }
+
+  .pattern-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    padding: 8px 16px;
+    border: 1px solid var(--accent3);
+    border-radius: 999px;
+    color: var(--text2);
+    font-size: 15px;
+  }
+
+  .pattern-tag.strong {
+    font-size: 17px;
+    color: var(--text);
+    border-color: rgba(44,56,48,0.15);
+  }
+
+  /* ─── Pricing ────────────────────────────── */
+  .pricing-card {
+    background: var(--bg2);
+    border-radius: 24px;
+    padding: 40px;
+    border: 1px solid var(--divider);
+    max-width: 440px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .pricing-card.visible { opacity: 1; transform: translateY(0); }
+
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 52px;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .price-period {
+    font-size: 13px;
+    color: var(--text3);
+    margin-bottom: 28px;
+    letter-spacing: 0.02em;
+  }
+
+  .price-rule {
+    width: 100%;
+    height: 1px;
+    background: var(--divider);
+    margin-bottom: 24px;
+  }
+
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .price-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  .price-feature::before {
+    content: '';
+    width: 2px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .price-trial {
+    font-size: 12px;
+    color: var(--text3);
+    text-align: center;
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── Waitlist ───────────────────────────── */
+  .waitlist-section {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .waitlist-section .t-italic { color: var(--bg); }
+  .waitlist-section p { color: rgba(247,244,238,0.6); }
+
+  .waitlist-form {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .waitlist-input {
+    flex: 1;
+    min-width: 220px;
+    background: rgba(247,244,238,0.08);
+    border: 1px solid rgba(247,244,238,0.15);
+    border-radius: 999px;
+    padding: 14px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--bg);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .waitlist-input::placeholder { color: rgba(247,244,238,0.35); }
+  .waitlist-input:focus { border-color: var(--accent); }
+
+  .waitlist-btn {
+    background: var(--accent);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 14px 28px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+
+  .waitlist-btn:hover { opacity: 0.8; }
+
+  .waitlist-thanks {
+    display: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: rgba(247,244,238,0.7);
+    margin-top: 20px;
+  }
+
+  /* ─── Footer ─────────────────────────────── */
+  footer {
+    padding: 40px 28px;
+    border-top: 1px solid var(--divider);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .footer-note {
+    font-size: 12px;
+    color: var(--text3);
+  }
+
+  /* ─── Animations ─────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Responsive ─────────────────────────── */
+  @media (min-width: 600px) {
+    .hero {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .hero-content { order: 1; }
+    .mockup-wrap  { order: 2; }
+
+    .how-step { grid-template-columns: 64px 1fr; }
+  }
+
+  @media (max-width: 599px) {
+    .mockup-wrap { padding-bottom: 0; }
+    .phone { width: 200px; }
+    .phone-screen { min-height: 360px; }
+    footer { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ── Nav ──────────────────────────────── -->
+<nav>
+  <a href="#" class="nav-logo">hayley</a>
+  <a href="#waitlist" class="nav-cta">get early access</a>
+</nav>
+
+<!-- ── Hero ─────────────────────────────── -->
+<section style="padding-top: 0; padding-bottom: 0;">
+  <div class="container">
+    <div class="hero">
+
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          <span class="t-label">a thinking companion</span>
+        </div>
+
+        <h1 class="t-display hero-headline">
+          say what's<br>on your mind.
+        </h1>
+
+        <div class="hero-rule"></div>
+
+        <p class="t-italic hero-sub" style="animation-delay: 0.4s;">
+          hayley listens, reflects, and surfaces what you haven't quite said yet.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#waitlist" class="btn-primary">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            get early access
+          </a>
+          <a href="#how" class="btn-ghost">see how it works ↓</a>
+        </div>
+      </div>
+
+      <div class="mockup-wrap">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-date">friday, may 8</div>
+            <div class="phone-title">entry</div>
+            <div class="phone-rule"></div>
+            <div class="phone-label">insights</div>
+            <div class="phone-cards">
+              <div class="phone-card c1">
+                <div class="pc-kind">
+                  <div class="pc-dot" style="background:var(--dot1)"></div>
+                  <span class="pc-kind-text" style="color:var(--dot1)">insight</span>
+                </div>
+                <div class="pc-headline">performing calm</div>
+                <div class="pc-body">A gap between outward composure and what's actually happening underneath.</div>
+              </div>
+              <div class="phone-card c2">
+                <div class="pc-kind">
+                  <div class="pc-dot" style="background:var(--dot2)"></div>
+                  <span class="pc-kind-text" style="color:var(--dot2)">pattern</span>
+                </div>
+                <div class="pc-headline">surface management</div>
+                <div class="pc-body">Third time using architectural metaphors for emotion. Worth noting.</div>
+              </div>
+              <div class="phone-card c3">
+                <div class="pc-kind">
+                  <div class="pc-dot" style="background:var(--dot3)"></div>
+                  <span class="pc-kind-text" style="color:var(--dot3)">question</span>
+                </div>
+                <div class="pc-headline">what is the friction pointing at?</div>
+                <div class="pc-body">Where in your body is it sitting right now?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── How It Works ──────────────────────── -->
+<section id="how">
+  <div class="container">
+    <p class="t-label" style="margin-bottom: 32px;">how it works</p>
+
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <div class="how-content">
+          <div class="how-title">speak for sixty seconds</div>
+          <p class="how-body">No prompts. No structure. Just tap and talk. Say whatever is on your mind — unfiltered, unedited. Hayley transcribes in real time as you speak.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <div class="how-content">
+          <div class="how-title">receive a real reflection</div>
+          <p class="how-body">Not a summary. Not a restatement. Hayley surfaces the thing you were circling — names the emotional state, identifies the pattern, asks the question you hadn't thought to ask.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <div class="how-content">
+          <div class="how-title">patterns emerge over time</div>
+          <p class="how-body">Each entry builds context. After a few sessions, hayley starts noticing what you consistently avoid, what language you reach for under pressure, what keeps coming back.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-num">04</div>
+        <div class="how-content">
+          <div class="how-title">one step, each week</div>
+          <p class="how-body">A weekly reflection surfaces what slowed you down, what you sidestepped, and — without judgement — one concrete thing to try differently.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Insight Example ────────────────────── -->
+<section class="insight-section">
+  <div class="container">
+    <div class="insight-intro">
+      <p class="t-label" style="margin-bottom: 20px;">what hayley notices</p>
+      <h2 class="t-italic" style="font-size: clamp(28px, 5vw, 42px); color: var(--text); margin-bottom: 16px;">
+        "I keep going back and forth and I can't make a decision."
+      </h2>
+      <p style="font-size: 14px; color: var(--text3); font-style: italic;">— a real entry, stripped of identifying detail</p>
+    </div>
+
+    <div class="insight-cards">
+      <div class="insight-card" style="transition-delay: 0.1s;">
+        <div class="ic-kind">
+          <div class="ic-dot" style="background:var(--dot1)"></div>
+          <span class="ic-label" style="color:var(--dot1)">insight</span>
+        </div>
+        <div class="ic-headline">decision fatigue masking clarity</div>
+        <p class="ic-body">The indecision isn't about the options — it's about not trusting the instinct you already have. You're searching for permission, not information.</p>
+      </div>
+
+      <div class="insight-card" style="transition-delay: 0.22s;">
+        <div class="ic-kind">
+          <div class="ic-dot" style="background:var(--dot2)"></div>
+          <span class="ic-label" style="color:var(--dot2)">pattern</span>
+        </div>
+        <div class="ic-headline">paralysis before committing</div>
+        <p class="ic-body">This is the fourth session this month where a decision loop appears. The stakes feel high in the moment, but the regret of inaction is consistently underweighted.</p>
+      </div>
+
+      <div class="insight-card" style="transition-delay: 0.34s;">
+        <div class="ic-kind">
+          <div class="ic-dot" style="background:var(--dot3)"></div>
+          <span class="ic-label" style="color:var(--dot3)">question</span>
+        </div>
+        <div class="ic-headline">what would you choose if no one was watching?</div>
+        <p class="ic-body">Strip away what you think you should want. Ignore the audience. What does the decision look like then?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Memory ─────────────────────────────── -->
+<section>
+  <div class="container">
+    <div class="memory-intro">
+      <p class="t-label" style="margin-bottom: 24px;">pattern memory</p>
+      <h2 class="t-italic memory-headline">
+        it starts to<br>notice things.
+      </h2>
+      <p class="memory-body">
+        After a few sessions, hayley builds a picture — not of events, but of how you think. The language you reach for under pressure. The things you consistently sidestep. The gap between what you say and what you mean.
+      </p>
+
+      <p class="t-label" style="margin-bottom: 16px; color: var(--text3);">patterns identified across sessions</p>
+      <div class="pattern-tags">
+        <span class="pattern-tag strong">weighing safety vs growth</span>
+        <span class="pattern-tag strong">overthinking before deciding</span>
+        <span class="pattern-tag">pressure to meet expectations</span>
+        <span class="pattern-tag">emotional understatement</span>
+        <span class="pattern-tag">clarity seeking</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Pricing ────────────────────────────── -->
+<section style="background: var(--bg2);">
+  <div class="container">
+    <p class="t-label" style="margin-bottom: 32px;">simple pricing</p>
+
+    <div class="pricing-card">
+      <div class="price-amount">€5.99</div>
+      <div class="price-period">per month — 7 days free, cancel anytime</div>
+      <div class="price-rule"></div>
+      <ul class="price-features">
+        <li class="price-feature">Unlimited voice entries, up to 60 seconds each</li>
+        <li class="price-feature">Real-time transcription, fully on-device</li>
+        <li class="price-feature">AI-powered insight, pattern, and question after each entry</li>
+        <li class="price-feature">Pattern memory that builds across sessions</li>
+        <li class="price-feature">Weekly reflection — what slowed you, what you avoided, one next step</li>
+      </ul>
+      <a href="#waitlist" class="btn-primary" style="width: 100%; justify-content: center;">
+        start free trial
+      </a>
+      <p class="price-trial">no commitment during the trial. cancel in one tap.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Waitlist ───────────────────────────── -->
+<section class="waitlist-section" id="waitlist">
+  <div class="container">
+    <p class="t-label" style="margin-bottom: 24px; color: rgba(247,244,238,0.4);">early access</p>
+    <h2 class="t-italic" style="font-size: clamp(32px, 6vw, 52px); margin-bottom: 16px;">
+      think more clearly,<br>starting this week.
+    </h2>
+    <p style="font-size: 15px; line-height: 1.65; max-width: 440px;">
+      Hayley is launching soon on iOS. Leave your email and we'll let you know when it's ready — no noise, one message.
+    </p>
+
+    <form class="waitlist-form" id="waitlistForm">
+      <input
+        type="email"
+        class="waitlist-input"
+        placeholder="your email"
+        required
+        id="emailInput"
+      >
+      <button type="submit" class="waitlist-btn">join waitlist</button>
+    </form>
+    <p class="waitlist-thanks" id="waitlistThanks">
+      you're on the list. we'll be in touch.
+    </p>
+  </div>
+</section>
+
+<!-- ── Footer ────────────────────────────── -->
+<footer>
+  <span class="footer-logo">hayley</span>
+  <span class="footer-note">a thinking companion for iOS · coming soon</span>
+</footer>
+
+<script>
+  // ── Scroll reveal ─────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(
+    '.how-step, .insight-intro, .insight-card, .memory-intro, .pattern-tags, .pricing-card'
+  ).forEach(el => observer.observe(el));
+
+  // ── Waitlist form ─────────────────────────
+  document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('emailInput').value;
+
+    // Replace this with your actual form handler (Mailchimp, Resend, Formspree etc.)
+    // For now just show the thank you message
+    console.log('Waitlist signup:', email);
+
+    this.style.display = 'none';
+    document.getElementById('waitlistThanks').style.display = 'block';
+  });
+
+  // ── Smooth anchor scroll ──────────────────
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
