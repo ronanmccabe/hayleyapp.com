@@ -209,6 +209,50 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
 .fnote{font-size:12px;color:var(--text3)}
 
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* Loops form — Hayley styled */
+.loops-wrap { width: 100%; max-width: 560px; }
+.newsletter-form { display: flex; gap: 11px; flex-wrap: wrap; }
+.newsletter-form-input {
+  flex: 1; min-width: 210px;
+  background: rgba(247,244,238,.07);
+  border: 1px solid rgba(247,244,238,.14);
+  border-radius: var(--rp);
+  padding: 13px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--bg);
+  outline: none;
+  transition: border-color .2s;
+  box-sizing: border-box;
+}
+.newsletter-form-input::placeholder { color: rgba(247,244,238,.3); }
+.newsletter-form-input:focus { border-color: var(--accent); }
+.newsletter-form-button,
+.newsletter-loading-button {
+  background: var(--accent);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 13px 26px;
+  border-radius: var(--rp);
+  border: none;
+  cursor: pointer;
+  transition: opacity .2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+.newsletter-form-button:hover { opacity: .8; }
+.newsletter-success { margin-top: 16px; }
+.newsletter-success-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 21px;
+  color: rgba(247,244,238,.65);
+}
+.newsletter-error { margin-top: 12px; }
 </style>
 </head>
 <body>
@@ -462,11 +506,22 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
     <p class="lbl" style="color:rgba(247,244,238,.3)">early access</p>
     <h2 class="cgi wl-h2">start thinking<br>more clearly.</h2>
     <p class="wl-sub">Hayley is launching on iOS soon. Leave your email, one message when it's ready, nothing else.</p>
-    <form class="wl-form" id="wlf">
-      <input type="email" class="wl-inp" placeholder="your email address" required id="wle">
-      <button type="submit" class="wl-btn">join waitlist</button>
-    </form>
-    <p class="wl-ty" id="wlt">you're on the list. we'll be in touch.</p>
+    <div class="loops-wrap">
+      <div class="newsletter-form-container">
+        <form class="newsletter-form" action="https://app.loops.so/api/newsletter-form/cmoxx7zj704a60iwwv2g8urdy" method="POST">
+          <input class="newsletter-form-input" placeholder="your email address" required type="email" name="newsletter-form-input">
+          <button type="submit" class="newsletter-form-button">join waitlist</button>
+          <button type="button" class="newsletter-loading-button" style="display:none">please wait...</button>
+        </form>
+        <div class="newsletter-success" style="display:none">
+          <p class="newsletter-success-message">you're on the list. we'll be in touch.</p>
+        </div>
+        <div class="newsletter-error" style="display:none">
+          <p class="newsletter-error-message">something went wrong, please try again</p>
+        </div>
+        <button class="newsletter-back-button" type="button" style="display:none;background:transparent;border:none;cursor:pointer;color:rgba(247,244,238,.4);font-family:'DM Sans',sans-serif;font-size:13px;margin-top:12px">back</button>
+      </div>
+    </div>
     <p class="wl-leg">no spam. one email. unsubscribe instantly.</p>
   </div>
 </div>
@@ -492,28 +547,86 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:0.1});
 document.querySelectorAll('.ls,.ic,.dc,.mem-txt,.mem-vis,.ptags,.pt,.pcard,.demo-arr').forEach(el=>obs.observe(el));
 
-// Waitlist
-// *** REPLACE 'YOUR_LOOPS_API_KEY' ON THE LINE MARKED BELOW WITH YOUR KEY FROM loops.so/settings/api ***
-document.getElementById('wlf').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const btn = this.querySelector('button[type=submit]');
-  const email = document.getElementById('wle').value.trim();
-  if (!email) return;
-  btn.textContent = 'sending...';
-  btn.disabled = true;
-  try {
-    const res = await fetch('https://app.loops.so/api/v1/contacts/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9b10e82ea1210dd63803df190ef808e1' // ← REPLACE THIS VALUE WITH YOUR KEY
-      },
-      body: JSON.stringify({
-        email: email,
-        userGroup: 'waitlist',
-        source: 'website'
-      })
+// Loops newsletter form handler
+function submitHandler(event) {
+  event.preventDefault();
+  var container = event.target.parentNode;
+  var form = container.querySelector(".newsletter-form");
+  var formInput = container.querySelector(".newsletter-form-input");
+  var success = container.querySelector(".newsletter-success");
+  var errorContainer = container.querySelector(".newsletter-error");
+  var errorMessage = container.querySelector(".newsletter-error-message");
+  var backButton = container.querySelector(".newsletter-back-button");
+  var submitButton = container.querySelector(".newsletter-form-button");
+  var loadingButton = container.querySelector(".newsletter-loading-button");
+  const rateLimit = () => {
+    errorContainer.style.display = "flex";
+    errorMessage.innerText = "Too many signups, please try again shortly";
+    submitButton.style.display = "none";
+    formInput.style.display = "none";
+    backButton.style.display = "block";
+  };
+  var time = new Date();
+  var timestamp = time.valueOf();
+  var previousTimestamp = localStorage.getItem("loops-form-timestamp");
+  if (previousTimestamp && Number(previousTimestamp) + 60000 > timestamp) { rateLimit(); return; }
+  localStorage.setItem("loops-form-timestamp", timestamp);
+  submitButton.style.display = "none";
+  loadingButton.style.display = "flex";
+  var formBody = "userGroup=&mailingLists=&email=" + encodeURIComponent(formInput.value);
+  fetch(event.target.action, {
+    method: "POST",
+    body: formBody,
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  })
+    .then((res) => [res.ok, res.json(), res])
+    .then(([ok, dataPromise, res]) => {
+      if (ok) {
+        success.style.display = "flex";
+        form.reset();
+      } else {
+        dataPromise.then(data => {
+          errorContainer.style.display = "flex";
+          errorMessage.innerText = data.message ? data.message : res.statusText;
+        });
+      }
+    })
+    .catch(error => {
+      if (error.message === "Failed to fetch") { rateLimit(); return; }
+      errorContainer.style.display = "flex";
+      if (error.message) errorMessage.innerText = error.message;
+      localStorage.setItem("loops-form-timestamp", '');
+    })
+    .finally(() => {
+      formInput.style.display = "none";
+      loadingButton.style.display = "none";
+      backButton.style.display = "block";
     });
+}
+function resetFormHandler(event) {
+  var container = event.target.parentNode;
+  var formInput = container.querySelector(".newsletter-form-input");
+  var success = container.querySelector(".newsletter-success");
+  var errorContainer = container.querySelector(".newsletter-error");
+  var errorMessage = container.querySelector(".newsletter-error-message");
+  var backButton = container.querySelector(".newsletter-back-button");
+  var submitButton = container.querySelector(".newsletter-form-button");
+  success.style.display = "none";
+  errorContainer.style.display = "none";
+  errorMessage.innerText = "Oops! Something went wrong, please try again";
+  backButton.style.display = "none";
+  formInput.style.display = "flex";
+  submitButton.style.display = "flex";
+}
+var formContainers = document.getElementsByClassName("newsletter-form-container");
+for (var i = 0; i < formContainers.length; i++) {
+  var formContainer = formContainers[i];
+  var handlersAdded = formContainer.classList.contains('newsletter-handlers-added');
+  if (handlersAdded) continue;
+  formContainer.querySelector(".newsletter-form").addEventListener("submit", submitHandler);
+  formContainer.querySelector(".newsletter-back-button").addEventListener("click", resetFormHandler);
+  formContainer.classList.add("newsletter-handlers-added");
+}
     const data = await res.json();
     console.log('Loops response:', res.status, data);
     if (res.ok) {
