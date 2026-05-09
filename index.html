@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hayley — think more clearly</title>
+<title>Hayley, think more clearly</title>
 <meta name="description" content="Speak for sixty seconds. Hayley reflects what you're really saying, identifies patterns over time, and helps you think more clearly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +51,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .phone-wrap{position:relative;width:clamp(200px,24vw,268px)}
 .phone{background:#1b2118;border-radius:42px;padding:13px;box-shadow:0 48px 90px rgba(44,56,48,.2),0 0 0 1px rgba(44,56,48,.1)}
 .pnotch{width:68px;height:7px;background:#111;border-radius:var(--rp);margin:0 auto 13px}
-.pscreen{background:var(--bg);border-radius:30px;padding:18px 16px 22px;min-height:460px;display:flex;flex-direction:column}
+.pscreen{background:var(--bg);border-radius:30px;height:460px;position:relative;overflow:hidden}
 .pdate{font-size:9px;font-weight:500;letter-spacing:.05em;color:var(--text3);margin-bottom:3px}
 .ptitle{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;color:var(--text);letter-spacing:-.04em;margin-bottom:16px;line-height:1}
 .prule{height:1px;background:var(--div);margin-bottom:15px}
@@ -81,10 +81,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .pwav span:nth-child(9){height:14px;animation:pw 1.1s ease-in-out infinite .25s}
 @keyframes pw{0%,100%{transform:scaleY(1);opacity:.7}50%{transform:scaleY(.3);opacity:.25}}
 .ppartial{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:var(--text3);text-align:center;line-height:1.4;max-width:150px}
-.pstate-rec{display:flex;flex-direction:column;flex:1}
-.pstate-res{display:none;flex-direction:column}
-.phone-wrap.show-res .pstate-rec{display:none}
-.phone-wrap.show-res .pstate-res{display:flex}
+.pstate-rec,.pstate-res{position:absolute;top:0;left:0;right:0;bottom:0;padding:18px 16px 22px;display:flex;flex-direction:column;transition:opacity .4s ease,visibility .4s ease}.pstate-res{opacity:0;visibility:hidden}.phone-wrap.show-res .pstate-rec{opacity:0;visibility:hidden}.phone-wrap.show-res .pstate-res{opacity:1;visibility:visible}
 .ptoggle{margin-top:18px;display:flex;gap:7px;justify-content:center}
 .ptoggle button{width:7px;height:7px;border-radius:50%;border:none;cursor:pointer;background:var(--div);transition:background .2s}
 .ptoggle button.active{background:var(--accent)}
@@ -234,11 +231,11 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
     <h1 class="cg h1 he">think more<br>clearly.</h1>
     <div class="rule he"></div>
     <p class="cgi hsub he">Speak for sixty seconds. Hayley reflects what you're really saying.</p>
-    <p class="hclar he">Not voice notes. Not AI chat. A companion that listens, identifies what's underneath, and builds a picture of how you think — over time.</p>
+    <p class="hclar he">Not voice notes. Not AI chat. A companion that listens, identifies what's underneath, and builds a picture of how you think, over time.</p>
     <div class="hacts he">
       <a href="#waitlist" class="bd">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="white" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-        start thinking — it's free
+        start thinking, it's free
       </a>
       <a href="#how" class="bg">see how it works →</a>
     </div>
@@ -268,7 +265,7 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
               <div class="pcard c1">
                 <div class="pck"><div class="pcdot" style="background:var(--c1)"></div><span class="pckt" style="color:var(--c1)">insight</span></div>
                 <div class="pch">searching for permission, not information</div>
-                <div class="pcb">The indecision isn't about the options — you already know.</div>
+                <div class="pcb">The indecision isn't about the options, you already know.</div>
               </div>
               <div class="pcard c2">
                 <div class="pck"><div class="pcdot" style="background:var(--c2)"></div><span class="pckt" style="color:var(--c2)">pattern</span></div>
@@ -309,7 +306,7 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
       <div class="ls-n">01</div>
       <div class="ls-ico"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
       <div class="ls-t">speak naturally</div>
-      <p class="ls-b">Tap. Talk. No prompts, no structure. Just say what's on your mind — up to sixty seconds.</p>
+      <p class="ls-b">Tap. Talk. No prompts, no structure. Just say what's on your mind, up to sixty seconds.</p>
     </div>
     <div class="ls" style="transition-delay:.13s">
       <div class="ls-arr"><svg viewBox="0 0 12 12"><polyline points="4,2 8,6 4,10"/></svg></div>
@@ -355,7 +352,7 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
       <div class="ic i1" style="transition-delay:.08s">
         <div class="ick"><div class="icdot" style="background:var(--c1)"></div><span class="icklbl" style="color:var(--c1)">insight</span></div>
         <div class="ich">searching for permission, not information</div>
-        <p class="icb">The indecision isn't about the options — it's about not trusting the instinct you already have. You're waiting for someone to tell you what you already know.</p>
+        <p class="icb">The indecision isn't about the options, it's about not trusting the instinct you already have. You're waiting for someone to tell you what you already know.</p>
       </div>
       <div class="ic i2" style="transition-delay:.2s">
         <div class="ick"><div class="icdot" style="background:var(--c2)"></div><span class="icklbl" style="color:var(--c2)">pattern detected</span></div>
@@ -381,7 +378,7 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
     <div class="mem-txt">
       <p class="lbl">pattern memory</p>
       <h2 class="cg mem-h2">it starts to<br>notice things.</h2>
-      <p class="mem-body">After a few sessions, hayley builds a picture — not of events, but of how you think. The language you reach for under pressure. What you consistently sidestep. The gap between what you say and what you mean.</p>
+      <p class="mem-body">After a few sessions, hayley builds a picture, not of events, but of how you think. The language you reach for under pressure. What you consistently sidestep. The gap between what you say and what you mean.</p>
       <p class="lbl" style="margin-bottom:13px">patterns identified across your sessions</p>
       <div class="ptags">
         <span class="ptag lg">weighing safety vs growth</span>
@@ -411,7 +408,7 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
     <div class="dc" style="transition-delay:.04s">
       <div class="dc-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
       <div class="dc-t">not a chatbot</div>
-      <p class="dc-b">Hayley doesn't respond conversationally. It reflects. The difference is in the quality of attention — it's looking for what you haven't quite said, not just what you said.</p>
+      <p class="dc-b">Hayley doesn't respond conversationally. It reflects. The difference is in the quality of attention, it's looking for what you haven't quite said, not just what you said.</p>
     </div>
     <div class="dc" style="transition-delay:.14s">
       <div class="dc-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
@@ -436,7 +433,7 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
     <div class="pt">
       <p class="lbl">simple pricing</p>
       <h2 class="cg">one plan.<br>no tiers.</h2>
-      <p style="font-size:15px;color:var(--text2);line-height:1.75">Everything hayley does — unlimited entries, pattern memory, weekly reflections — included from day one. The 7-day trial is genuinely free. No card required to start.</p>
+      <p style="font-size:15px;color:var(--text2);line-height:1.75">Everything hayley does, unlimited entries, pattern memory, weekly reflections, included from day one. The 7-day trial is genuinely free. No card required to start.</p>
     </div>
     <div class="pcard">
       <div class="pamt">€5.99</div>
@@ -446,10 +443,10 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
         <li class="pfeat">Unlimited voice entries, up to 60 seconds each</li>
         <li class="pfeat">Insight, pattern, and question after every entry</li>
         <li class="pfeat">Pattern memory that builds across sessions</li>
-        <li class="pfeat">Weekly reflection — what slowed you, what you avoided</li>
-        <li class="pfeat">On-device transcription — nothing leaves your phone</li>
+        <li class="pfeat">Weekly reflection, what slowed you, what you avoided</li>
+        <li class="pfeat">On-device transcription, nothing leaves your phone</li>
       </ul>
-      <a href="#waitlist" class="bd" style="width:100%;justify-content:center;display:flex">start thinking — it's free</a>
+      <a href="#waitlist" class="bd" style="width:100%;justify-content:center;display:flex">start thinking, it's free</a>
       <p class="plegal">cancel in one tap. billed monthly after trial.</p>
     </div>
   </div>
@@ -464,7 +461,7 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
   <div class="wl-inner">
     <p class="lbl" style="color:rgba(247,244,238,.3)">early access</p>
     <h2 class="cgi wl-h2">start thinking<br>more clearly.</h2>
-    <p class="wl-sub">Hayley is launching on iOS soon. Leave your email — one message when it's ready, nothing else.</p>
+    <p class="wl-sub">Hayley is launching on iOS soon. Leave your email, one message when it's ready, nothing else.</p>
     <form class="wl-form" id="wlf">
       <input type="email" class="wl-inp" placeholder="your email address" required id="wle">
       <button type="submit" class="wl-btn">join waitlist</button>
