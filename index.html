@@ -547,113 +547,93 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:0.1});
 document.querySelectorAll('.ls,.ic,.dc,.mem-txt,.mem-vis,.ptags,.pt,.pcard,.demo-arr').forEach(el=>obs.observe(el));
 
-// Loops newsletter form handler
-function submitHandler(event) {
-  event.preventDefault();
-  var container = event.target.parentNode;
-  var form = container.querySelector(".newsletter-form");
-  var formInput = container.querySelector(".newsletter-form-input");
-  var success = container.querySelector(".newsletter-success");
-  var errorContainer = container.querySelector(".newsletter-error");
-  var errorMessage = container.querySelector(".newsletter-error-message");
-  var backButton = container.querySelector(".newsletter-back-button");
-  var submitButton = container.querySelector(".newsletter-form-button");
-  var loadingButton = container.querySelector(".newsletter-loading-button");
-  const rateLimit = () => {
-    errorContainer.style.display = "flex";
-    errorMessage.innerText = "Too many signups, please try again shortly";
-    submitButton.style.display = "none";
-    formInput.style.display = "none";
-    backButton.style.display = "block";
-  };
-  var time = new Date();
-  var timestamp = time.valueOf();
-  var previousTimestamp = localStorage.getItem("loops-form-timestamp");
-  if (previousTimestamp && Number(previousTimestamp) + 60000 > timestamp) { rateLimit(); return; }
-  localStorage.setItem("loops-form-timestamp", timestamp);
-  submitButton.style.display = "none";
-  loadingButton.style.display = "flex";
-  var formBody = "userGroup=&mailingLists=&email=" + encodeURIComponent(formInput.value);
-  fetch(event.target.action, {
-    method: "POST",
-    body: formBody,
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  })
-    .then((res) => [res.ok, res.json(), res])
-    .then(([ok, dataPromise, res]) => {
-      if (ok) {
-        success.style.display = "flex";
-        form.reset();
-      } else {
-        dataPromise.then(data => {
-          errorContainer.style.display = "flex";
-          errorMessage.innerText = data.message ? data.message : res.statusText;
-        });
-      }
-    })
-    .catch(error => {
-      if (error.message === "Failed to fetch") { rateLimit(); return; }
-      errorContainer.style.display = "flex";
-      if (error.message) errorMessage.innerText = error.message;
-      localStorage.setItem("loops-form-timestamp", '');
-    })
-    .finally(() => {
-      formInput.style.display = "none";
-      loadingButton.style.display = "none";
-      backButton.style.display = "block";
-    });
-}
-function resetFormHandler(event) {
-  var container = event.target.parentNode;
-  var formInput = container.querySelector(".newsletter-form-input");
-  var success = container.querySelector(".newsletter-success");
-  var errorContainer = container.querySelector(".newsletter-error");
-  var errorMessage = container.querySelector(".newsletter-error-message");
-  var backButton = container.querySelector(".newsletter-back-button");
-  var submitButton = container.querySelector(".newsletter-form-button");
-  success.style.display = "none";
-  errorContainer.style.display = "none";
-  errorMessage.innerText = "Oops! Something went wrong, please try again";
-  backButton.style.display = "none";
-  formInput.style.display = "flex";
-  submitButton.style.display = "flex";
-}
-var formContainers = document.getElementsByClassName("newsletter-form-container");
-for (var i = 0; i < formContainers.length; i++) {
-  var formContainer = formContainers[i];
-  var handlersAdded = formContainer.classList.contains('newsletter-handlers-added');
-  if (handlersAdded) continue;
-  formContainer.querySelector(".newsletter-form").addEventListener("submit", submitHandler);
-  formContainer.querySelector(".newsletter-back-button").addEventListener("click", resetFormHandler);
-  formContainer.classList.add("newsletter-handlers-added");
-}
-    const data = await res.json();
-    console.log('Loops response:', res.status, data);
-    if (res.ok) {
-      this.style.display = 'none';
-      document.getElementById('wlt').style.display = 'block';
-    } else {
-      console.error('Loops error:', data);
-      btn.textContent = 'try again';
-      btn.disabled = false;
-    }
-  } catch(err) {
-    console.error('Network error:', err);
-    btn.textContent = 'try again';
-    btn.disabled = false;
-  }
-});
-  } catch(err) { console.error('Loops error:', err); }
-  this.style.display = 'none';
-  document.getElementById('wlt').style.display = 'block';
-});
-
 // Nav highlight
 const secs=document.querySelectorAll('section[id]');
 window.addEventListener('scroll',()=>{
   let cur='';secs.forEach(s=>{if(scrollY>=s.offsetTop-80)cur=s.id});
   document.querySelectorAll('.nlink').forEach(l=>{l.style.color=l.getAttribute('href')==='#'+cur?'var(--text)':''});
 },{passive:true});
+
+// Loops newsletter form — attached on DOMContentLoaded to ensure DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  function submitHandler(event) {
+    event.preventDefault();
+    var container = event.target.parentNode;
+    var form = container.querySelector('.newsletter-form');
+    var formInput = container.querySelector('.newsletter-form-input');
+    var success = container.querySelector('.newsletter-success');
+    var errorContainer = container.querySelector('.newsletter-error');
+    var errorMessage = container.querySelector('.newsletter-error-message');
+    var backButton = container.querySelector('.newsletter-back-button');
+    var submitButton = container.querySelector('.newsletter-form-button');
+    var loadingButton = container.querySelector('.newsletter-loading-button');
+
+    var time = new Date();
+    var timestamp = time.valueOf();
+    var previousTimestamp = localStorage.getItem('loops-form-timestamp');
+    if (previousTimestamp && Number(previousTimestamp) + 60000 > timestamp) {
+      errorContainer.style.display = 'flex';
+      errorMessage.innerText = 'Too many signups, please try again shortly';
+      submitButton.style.display = 'none';
+      formInput.style.display = 'none';
+      backButton.style.display = 'block';
+      return;
+    }
+    localStorage.setItem('loops-form-timestamp', timestamp);
+
+    submitButton.style.display = 'none';
+    loadingButton.style.display = 'flex';
+
+    var formBody = 'userGroup=&mailingLists=&email=' + encodeURIComponent(formInput.value);
+
+    fetch(event.target.action, {
+      method: 'POST',
+      body: formBody,
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+    .then(function(res) { return Promise.all([res.ok, res.json()]); })
+    .then(function(results) {
+      var ok = results[0];
+      var data = results[1];
+      if (ok) {
+        success.style.display = 'flex';
+        form.reset();
+      } else {
+        errorContainer.style.display = 'flex';
+        errorMessage.innerText = data.message ? data.message : 'Something went wrong';
+      }
+    })
+    .catch(function(error) {
+      errorContainer.style.display = 'flex';
+      errorMessage.innerText = 'Something went wrong, please try again';
+      localStorage.setItem('loops-form-timestamp', '');
+    })
+    .finally(function() {
+      formInput.style.display = 'none';
+      loadingButton.style.display = 'none';
+      backButton.style.display = 'block';
+    });
+  }
+
+  function resetFormHandler(event) {
+    var container = event.target.parentNode;
+    container.querySelector('.newsletter-success').style.display = 'none';
+    container.querySelector('.newsletter-error').style.display = 'none';
+    container.querySelector('.newsletter-error-message').innerText = 'Something went wrong, please try again';
+    container.querySelector('.newsletter-back-button').style.display = 'none';
+    container.querySelector('.newsletter-form-input').style.display = 'flex';
+    container.querySelector('.newsletter-form-button').style.display = 'flex';
+  }
+
+  var formContainers = document.getElementsByClassName('newsletter-form-container');
+  for (var i = 0; i < formContainers.length; i++) {
+    var fc = formContainers[i];
+    if (fc.classList.contains('newsletter-handlers-added')) continue;
+    fc.querySelector('.newsletter-form').addEventListener('submit', submitHandler);
+    fc.querySelector('.newsletter-back-button').addEventListener('click', resetFormHandler);
+    fc.classList.add('newsletter-handlers-added');
+  }
+});
 </script>
 </body>
 </html>
