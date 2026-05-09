@@ -493,19 +493,43 @@ const obs=new IntersectionObserver(entries=>{
 document.querySelectorAll('.ls,.ic,.dc,.mem-txt,.mem-vis,.ptags,.pt,.pcard,.demo-arr').forEach(el=>obs.observe(el));
 
 // Waitlist
-// *** ADD YOUR LOOPS API KEY BELOW — replace REPLACE_WITH_YOUR_LOOPS_API_KEY ***
+// *** REPLACE 'YOUR_LOOPS_API_KEY' ON THE LINE MARKED BELOW WITH YOUR KEY FROM loops.so/settings/api ***
 document.getElementById('wlf').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const email = document.getElementById('wle').value;
+  const btn = this.querySelector('button[type=submit]');
+  const email = document.getElementById('wle').value.trim();
+  if (!email) return;
+  btn.textContent = 'sending...';
+  btn.disabled = true;
   try {
-    await fetch('https://app.loops.so/api/v1/contacts/create', {
+    const res = await fetch('https://app.loops.so/api/v1/contacts/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer 9b10e82ea1210dd63803df190ef808e1'
+        'Authorization': 'Bearer 9b10e82ea1210dd63803df190ef808e1' // ← REPLACE THIS VALUE WITH YOUR KEY
       },
-      body: JSON.stringify({ email, source: 'website-waitlist' })
+      body: JSON.stringify({
+        email: email,
+        userGroup: 'waitlist',
+        source: 'website'
+      })
     });
+    const data = await res.json();
+    console.log('Loops response:', res.status, data);
+    if (res.ok) {
+      this.style.display = 'none';
+      document.getElementById('wlt').style.display = 'block';
+    } else {
+      console.error('Loops error:', data);
+      btn.textContent = 'try again';
+      btn.disabled = false;
+    }
+  } catch(err) {
+    console.error('Network error:', err);
+    btn.textContent = 'try again';
+    btn.disabled = false;
+  }
+});
   } catch(err) { console.error('Loops error:', err); }
   this.style.display = 'none';
   document.getElementById('wlt').style.display = 'block';
