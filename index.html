@@ -68,11 +68,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .priv-badge span{font-size:11px;color:var(--text2);letter-spacing:.02em}
 
 /* PHONE */
-.phone-wrap{position:relative;width:100%;max-width:268px}
-.phone{background:#1b2118;border-radius:46px;padding:12px 12px 16px;box-shadow:0 48px 90px rgba(44,56,48,.2),0 0 0 1px rgba(44,56,48,.1)}
-.pnotch-bar{display:flex;align-items:center;justify-content:center;padding:8px 0 10px}
-.pnotch{width:80px;height:5px;background:#111;border-radius:var(--rp)}
-.pscreen{background:var(--bg);border-radius:34px;height:460px;position:relative;overflow:hidden}
+.phone-wrap{position:relative;width:100%;max-width:260px}
+.phone{position:relative;background:#1a1a1a;border-radius:50px;padding:11px;box-shadow:0 32px 72px rgba(44,56,48,.22),0 0 0 1px rgba(0,0,0,.18)}
+.pside-vol{position:absolute;left:-3px;top:80px;width:3px;height:28px;background:#2a2a2a;border-radius:2px 0 0 2px}
+.pside-vol2{position:absolute;left:-3px;top:118px;width:3px;height:28px;background:#2a2a2a;border-radius:2px 0 0 2px}
+.pside-pwr{position:absolute;right:-3px;top:100px;width:3px;height:48px;background:#2a2a2a;border-radius:0 2px 2px 0}
+.pscreen{background:var(--bg);border-radius:40px;height:460px;position:relative;overflow:hidden}
 .pdate{font-size:9px;font-weight:500;letter-spacing:.05em;color:var(--text3);margin-bottom:3px}
 .ptitle{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;color:var(--text);letter-spacing:-.04em;margin-bottom:16px;line-height:1}
 .prule{height:1px;background:var(--div);margin-bottom:15px}
@@ -102,7 +103,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .pwav span:nth-child(9){height:14px;animation:pw 1.1s ease-in-out infinite .25s}
 @keyframes pw{0%,100%{transform:scaleY(1);opacity:.7}50%{transform:scaleY(.3);opacity:.25}}
 .ppartial{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:var(--text3);text-align:center;line-height:1.4;max-width:150px}
-.pstate-rec,.pstate-res{position:absolute;top:0;left:0;right:0;bottom:0;padding:18px 16px 22px;display:flex;flex-direction:column;transition:opacity .4s ease,visibility .4s ease}.pstate-res{opacity:0;visibility:hidden}.phone-wrap.show-res .pstate-rec{opacity:0;visibility:hidden}.phone-wrap.show-res .pstate-res{opacity:1;visibility:visible}
+.pstate-rec,.pstate-res{position:absolute;top:0;left:0;right:0;bottom:0;padding:26px 16px 22px;display:flex;flex-direction:column;transition:opacity .4s ease,visibility .4s ease}.pstate-res{opacity:0;visibility:hidden}.phone-wrap.show-res .pstate-rec{opacity:0;visibility:hidden}.phone-wrap.show-res .pstate-res{opacity:1;visibility:visible}
 .ptoggle{margin-top:18px;display:flex;gap:7px;justify-content:center}
 .ptoggle button{width:7px;height:7px;border-radius:50%;border:none;cursor:pointer;background:var(--div);transition:background .2s}
 .ptoggle button.active{background:var(--accent)}
@@ -307,8 +308,10 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
   .hsub{font-size:18px}
   .hclar,.hpain{max-width:none;font-size:15px}
   .for-whom{margin-bottom:16px}
-  .priv-badge{flex-wrap:nowrap;width:100%}
+  .priv-badge{flex-wrap:nowrap;width:auto}
   .priv-badge span{font-size:10px;line-height:1.4}
+  /* Centre the badge row on mobile */
+  .hacts + div{justify-content:center}
 
   /* Hero CTAs — full width stack */
   .hacts{flex-direction:column;align-items:stretch;gap:12px}
@@ -415,17 +418,21 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
       <a href="#how" class="bg">see how it works →</a>
     </div>
 
-    <!-- NEW: privacy trust signal above the fold -->
+    <!-- NEW: privacy trust signal — own row below buttons -->
+    <div style="display:flex;margin-top:4px">
     <div class="priv-badge he">
       <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
       <span>On-device transcription — your words never leave your phone</span>
+    </div>
     </div>
   </div>
 
   <div class="hv">
     <div class="phone-wrap" id="pm">
       <div class="phone">
-        <div class="pnotch-bar"><div class="pnotch"></div></div>
+        <div class="pside-vol"></div>
+        <div class="pside-vol2"></div>
+        <div class="pside-pwr"></div>
         <div class="pscreen">
           <div class="pstate-rec">
             <div style="display:flex;justify-content:space-between;margin-bottom:2px">
