@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Hayley</title>
+<meta name="description" content="Get in touch with the Hayley team. We're a small team and we read everything.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F4EE;--bg2:#EEF2F0;--text:#2C3830;--text2:#5A6B62;--text3:#8FA498;--accent:#7BA99A;--a2:rgba(123,169,154,.14);--a3:rgba(123,169,154,.32);--div:rgba(44,56,48,.08);--r:28px;--rp:999px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+.cg{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:-.03em;line-height:1.05}
+.cgi{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;letter-spacing:-.01em;line-height:1.15}
+.lbl{font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--text3);text-transform:lowercase}
+
+/* NAV */
+nav{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,48px);background:var(--bg);border-bottom:1px solid var(--div)}
+.nl{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px;letter-spacing:-.04em}
+.nback{font-size:13px;color:var(--text3);display:flex;align-items:center;gap:7px;transition:color .2s}.nback:hover{color:var(--text)}
+.nback svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* MAIN */
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(48px,8vw,100px) clamp(20px,5vw,60px)}
+.contact-wrap{max-width:560px;width:100%}
+
+/* HEADER */
+.contact-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.contact-h1{font-size:clamp(36px,6vw,58px);margin-bottom:12px;line-height:1.05}
+.rule{width:32px;height:1.5px;background:var(--accent);margin-bottom:20px}
+.contact-sub{font-size:15px;color:var(--text2);line-height:1.75;margin-bottom:36px}
+
+/* CONTACT CARD */
+.contact-card{background:var(--bg2);border-radius:22px;padding:clamp(24px,4vw,40px);border:1px solid var(--div);margin-bottom:24px}
+.contact-row{display:flex;align-items:flex-start;gap:16px}
+.contact-icon{width:42px;height:42px;background:var(--a2);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-icon svg{width:19px;height:19px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.contact-label{font-size:10px;font-weight:500;letter-spacing:.07em;color:var(--text3);margin-bottom:5px;text-transform:lowercase}
+.contact-email{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--text);letter-spacing:-.01em;line-height:1.2;margin-bottom:4px}
+.contact-note{font-size:13px;color:var(--text3);line-height:1.5}
+.contact-btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:var(--text);color:var(--bg);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 24px;border-radius:var(--rp);transition:opacity .2s;border:none;cursor:pointer;text-decoration:none}
+.contact-btn:hover{opacity:.75}
+.contact-btn svg{width:14px;height:14px;stroke:var(--bg);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* DIVIDER */
+.or-row{display:flex;align-items:center;gap:14px;margin:28px 0}
+.or-line{flex:1;height:1px;background:var(--div)}
+.or-txt{font-size:11px;color:var(--text3);letter-spacing:.05em}
+
+/* TOPIC CHIPS */
+.topic-head{font-size:11px;font-weight:500;letter-spacing:.06em;color:var(--text3);margin-bottom:14px;text-transform:lowercase}
+.topics{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:32px}
+.topic{font-size:13px;color:var(--text2);background:var(--bg2);border:1px solid var(--div);border-radius:var(--rp);padding:8px 16px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;user-select:none}
+.topic:hover,.topic.active{background:var(--a2);border-color:var(--a3);color:var(--text)}
+
+/* REASSURANCE */
+.reassure{display:flex;flex-direction:column;gap:12px}
+.reassure-item{display:flex;align-items:flex-start;gap:11px;font-size:13px;color:var(--text3);line-height:1.55}
+.reassure-item svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:2px}
+
+/* FOOTER */
+footer{padding:24px clamp(20px,4vw,48px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid var(--div)}
+.flogo{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;letter-spacing:-.03em}
+.fnote{font-size:12px;color:var(--text3)}
+
+/* MOBILE */
+@media(max-width:480px){
+  .contact-email{font-size:18px}
+  .contact-btn{width:100%;justify-content:center}
+  .topics{gap:8px}
+  .topic{font-size:12px;padding:7px 14px}
+}
+
+/* Safe area */
+@supports(padding:max(0px)){
+  nav{padding-left:max(clamp(20px,4vw,48px),env(safe-area-inset-left));padding-right:max(clamp(20px,4vw,48px),env(safe-area-inset-right))}
+  footer{padding-left:max(clamp(20px,4vw,48px),env(safe-area-inset-left));padding-right:max(clamp(20px,4vw,48px),env(safe-area-inset-right));padding-bottom:max(24px,env(safe-area-inset-bottom))}
+}
+
+/* Entry animation */
+.fade-up{opacity:0;animation:up .5s ease forwards}
+.fade-up:nth-child(1){animation-delay:.06s}
+.fade-up:nth-child(2){animation-delay:.14s}
+.fade-up:nth-child(3){animation-delay:.22s}
+.fade-up:nth-child(4){animation-delay:.30s}
+.fade-up:nth-child(5){animation-delay:.38s}
+.fade-up:nth-child(6){animation-delay:.46s}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nl cg">hayley</a>
+  <a href="/" class="nback">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    back
+  </a>
+</nav>
+
+<main>
+  <div class="contact-wrap">
+
+    <div class="fade-up">
+      <div class="contact-eyebrow"><span class="dot"></span><span class="lbl">get in touch</span></div>
+      <h1 class="cg contact-h1">say hello.</h1>
+      <div class="rule"></div>
+      <p class="contact-sub">We're a small team and we read everything. Whether it's a bug, a question about your account, or just something on your mind — reach out.</p>
+    </div>
+
+    <div class="contact-card fade-up">
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">email us</div>
+          <div class="contact-email">ronan@getmonthly.co</div>
+          <div class="contact-note">We aim to reply within one business day.</div>
+        </div>
+      </div>
+      <a href="mailto:ronan@getmonthly.co" class="contact-btn">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        open email
+      </a>
+    </div>
+
+    <div class="fade-up">
+      <div class="topic-head">what's it about?</div>
+      <div class="topics">
+        <span class="topic" onclick="setTopic(this,'App Support')">app support</span>
+        <span class="topic" onclick="setTopic(this,'My Account')">my account</span>
+        <span class="topic" onclick="setTopic(this,'Billing')">billing</span>
+        <span class="topic" onclick="setTopic(this,'Bug Report')">bug report</span>
+        <span class="topic" onclick="setTopic(this,'Privacy Question')">privacy question</span>
+        <span class="topic" onclick="setTopic(this,'Just saying hi')">just saying hi</span>
+      </div>
+    </div>
+
+    <div class="reassure fade-up">
+      <div class="reassure-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        We read every email personally — no support ticket queue
+      </div>
+      <div class="reassure-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Your entries stay on your device — we can't see them
+      </div>
+      <div class="reassure-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        For App Store billing issues, Apple handles refunds directly via <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener" style="color:var(--accent)">reportaproblem.apple.com</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <span class="flogo cg">hayley</span>
+  <span class="fnote">a thinking companion · iOS · <a href="/privacy" style="color:var(--text3)">privacy policy</a></span>
+</footer>
+
+<script>
+function setTopic(el, topic) {
+  document.querySelectorAll('.topic').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const subject = encodeURIComponent('Hayley — ' + topic);
+  document.querySelector('.contact-btn').href = 'mailto:ronan@getmonthly.co?subject=' + subject;
+}
+</script>
+
+</body>
+</html>
