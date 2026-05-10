@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hayley, think more clearly</title>
 <meta name="description" content="Speak for sixty seconds. Hayley reflects what you're really saying, identifies patterns over time, and helps you think more clearly.">
+<!-- OG / Social preview -->
+<meta property="og:title" content="Hayley — think more clearly">
+<meta property="og:description" content="A voice thinking companion for iOS. Speak for sixty seconds. Hayley reflects what you're really saying.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hayleyapp.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hayley — think more clearly">
+<meta name="twitter:description" content="Speak for sixty seconds. Hayley reflects what you're really saying.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
@@ -35,23 +43,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px);align-items:center}
 @media(max-width:768px){.hero-grid{grid-template-columns:1fr}.hv{display:none}}@media(min-width:769px) and (max-width:1024px){.phone-wrap{max-width:220px}.pscreen{height:400px}}
 .he{opacity:0;animation:up .6s ease forwards}
-.he:nth-child(1){animation-delay:.08s}.he:nth-child(2){animation-delay:.18s}.he:nth-child(3){animation-delay:.28s}.he:nth-child(4){animation-delay:.38s}.he:nth-child(5){animation-delay:.48s}.he:nth-child(6){animation-delay:.58s}
+.he:nth-child(1){animation-delay:.08s}.he:nth-child(2){animation-delay:.18s}.he:nth-child(3){animation-delay:.28s}.he:nth-child(4){animation-delay:.38s}.he:nth-child(5){animation-delay:.48s}.he:nth-child(6){animation-delay:.58s}.he:nth-child(7){animation-delay:.68s}
 .eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:24px}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
 .h1{font-size:clamp(38px,5.5vw,70px);margin-bottom:10px;line-height:1.05}
 .rule{width:32px;height:1.5px;background:var(--accent);margin-bottom:18px}
-.hsub{font-size:clamp(16px,1.8vw,19px);color:var(--text2);line-height:1.65;margin-bottom:10px}
-.hclar{font-size:14px;color:var(--text3);line-height:1.65;max-width:420px;margin-bottom:32px}@media(max-width:600px){.hclar,.hsub{max-width:none}}
+.hsub{font-size:clamp(17px,4vw,19px);color:var(--text2);line-height:1.65;margin-bottom:10px}
+.hclar{font-size:14px;color:var(--text3);line-height:1.65;max-width:420px;margin-bottom:10px}
+/* NEW: pain framing line */
+.hpain{font-size:14px;color:var(--text2);line-height:1.7;max-width:420px;margin-bottom:24px;font-style:italic}
 .hacts{display:flex;align-items:center;gap:18px;flex-wrap:wrap}@media(max-width:480px){.hacts{flex-direction:column;align-items:flex-start;gap:14px}.bd{width:100%;justify-content:center}}
 .bd{display:inline-flex;align-items:center;gap:8px;background:var(--text);color:var(--bg);font-size:14px;font-weight:500;padding:13px 26px;border-radius:var(--rp);transition:opacity .2s}.bd:hover{opacity:.75}
+/* App Store CTA — ready to activate */
+.bd-store{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--text);font-size:14px;font-weight:500;padding:13px 26px;border-radius:var(--rp);transition:opacity .2s}.bd-store:hover{opacity:.8}
 .bg{font-size:13px;color:var(--text3);transition:color .2s}.bg:hover{color:var(--text)}
 .hv{opacity:0;animation:up .7s ease forwards .36s}
+/* For-whom chip */
+.for-whom{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.fw-tag{font-size:11px;font-weight:500;letter-spacing:.04em;color:var(--text2);background:var(--a2);border:1px solid var(--a3);border-radius:var(--rp);padding:5px 12px}
+
+/* PRIVACY BADGE */
+.priv-badge{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:9px 15px;background:var(--a2);border:1px solid var(--a3);border-radius:var(--rp)}
+.priv-badge svg{width:13px;height:13px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.priv-badge span{font-size:11px;color:var(--text2);letter-spacing:.02em}
 
 /* PHONE */
 .phone-wrap{position:relative;width:100%;max-width:268px}
-.phone{background:#1b2118;border-radius:42px;padding:13px;box-shadow:0 48px 90px rgba(44,56,48,.2),0 0 0 1px rgba(44,56,48,.1)}
-.pnotch{width:68px;height:7px;background:#111;border-radius:var(--rp);margin:0 auto 13px}
-.pscreen{background:var(--bg);border-radius:30px;height:460px;position:relative;overflow:hidden}
+.phone{background:#1b2118;border-radius:46px;padding:12px 12px 16px;box-shadow:0 48px 90px rgba(44,56,48,.2),0 0 0 1px rgba(44,56,48,.1)}
+.pnotch-bar{display:flex;align-items:center;justify-content:center;padding:8px 0 10px}
+.pnotch{width:80px;height:5px;background:#111;border-radius:var(--rp)}
+.pscreen{background:var(--bg);border-radius:34px;height:460px;position:relative;overflow:hidden}
 .pdate{font-size:9px;font-weight:500;letter-spacing:.05em;color:var(--text3);margin-bottom:3px}
 .ptitle{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:30px;color:var(--text);letter-spacing:-.04em;margin-bottom:16px;line-height:1}
 .prule{height:1px;background:var(--div);margin-bottom:15px}
@@ -139,6 +160,30 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .ich{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--text);letter-spacing:-.01em;line-height:1.2;margin-bottom:7px}
 .icb{font-size:13px;color:var(--text2);line-height:1.6}
 
+/* WEEKLY REFLECTION — new section */
+.weekly-sec{background:var(--bg3)}
+.weekly-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center}
+@media(max-width:720px){.weekly-grid{grid-template-columns:1fr}}
+.weekly-txt{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.weekly-txt.vis{opacity:1;transform:translateY(0)}
+.weekly-h2{font-size:clamp(30px,3.8vw,46px);margin:14px 0 18px}
+.weekly-body{font-size:15px;color:var(--text2);line-height:1.75}
+.weekly-card{background:var(--bg);border-radius:22px;padding:clamp(24px,3vw,36px);border:1px solid var(--div);opacity:0;transform:translateY(14px);transition:opacity .6s .12s,transform .6s .12s}
+.weekly-card.vis{opacity:1;transform:translateY(0)}
+.wc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.wc-date{font-size:10px;font-weight:500;letter-spacing:.06em;color:var(--text3)}
+.wc-pill{font-size:10px;font-weight:500;letter-spacing:.05em;color:var(--accent);background:var(--a2);padding:4px 11px;border-radius:var(--rp)}
+.wc-rule{height:1px;background:var(--div);margin-bottom:18px}
+.wc-items{display:flex;flex-direction:column;gap:14px}
+.wc-item{display:flex;gap:12px;align-items:flex-start}
+.wc-dot-col{display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:3px}
+.wc-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.wc-dot.slow{background:var(--c2)}
+.wc-dot.avoid{background:var(--c3)}
+.wc-dot.next{background:var(--c1)}
+.wc-lbl{font-size:9px;font-weight:500;letter-spacing:.07em;color:var(--text3);text-transform:lowercase;margin-bottom:3px}
+.wc-val{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--text);line-height:1.35}
+
 /* MEMORY */
 .mem-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center}
 @media(max-width:720px){.mem-grid{grid-template-columns:1fr}}
@@ -152,7 +197,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .ptag.lg{font-size:17px;border:1px solid rgba(44,56,48,.14);color:var(--text)}
 .ptag.md{font-size:15px;border:1px solid var(--a3)}
 .ptag.sm{font-size:13px;border:1px solid var(--a2);opacity:.7}
-.mem-vis{position:relative;height:300px;opacity:0;transform:translateY(14px);transition:opacity .6s .12s,transform .6s .12s}
+.mem-vis{position:relative;min-height:280px;height:300px;opacity:0;transform:translateY(14px);transition:opacity .6s .12s,transform .6s .12s}
 .mem-vis.vis{opacity:1;transform:translateY(0)}
 .mvc{position:absolute;width:100%;background:var(--bg2);border-radius:18px;padding:18px 20px;border:1px solid var(--div)}
 .mvc:nth-child(1){top:0;transform:rotate(-2deg);opacity:.35}
@@ -175,6 +220,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .dc-b{font-size:13px;color:var(--text2);line-height:1.65}
 @media(max-width:680px){.diff-grid{grid-template-columns:1fr}.dc:first-child{border-radius:var(--r) var(--r) 0 0}.dc:last-child{border-radius:0 0 var(--r) var(--r)}.dc:not(:first-child):not(:last-child){border-radius:0}}
 
+/* PRIVACY TRUST STRIP — new */
+.priv-strip{background:var(--text);padding:clamp(28px,4vw,48px) 0}
+.priv-strip-inner{display:flex;align-items:center;justify-content:center;gap:clamp(24px,4vw,60px);flex-wrap:wrap}
+.priv-item{display:flex;align-items:center;gap:11px}
+.priv-item svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.priv-item-t{font-size:13px;color:rgba(247,244,238,.65);line-height:1.4}
+.priv-item-t strong{display:block;font-size:13px;font-weight:500;color:rgba(247,244,238,.9);margin-bottom:1px}
+
 /* PRICING */
 .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,60px);align-items:start}
 @media(max-width:700px){.price-grid{grid-template-columns:1fr}}
@@ -191,16 +244,51 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .pfeat::before{content:'';width:2px;min-height:16px;background:var(--accent);border-radius:2px;flex-shrink:0;margin-top:2px}
 .plegal{font-size:11px;color:var(--text3);text-align:center;margin-top:11px;letter-spacing:.02em}
 
+/* FAQ — new */
+.faq-sec{background:var(--bg2)}
+.faq-grid{max-width:680px}
+.faq-h2{font-size:clamp(28px,3.5vw,42px);margin:14px 0 36px}
+.faq-item{border-top:1px solid var(--div);padding:20px 0}
+.faq-item:last-child{border-bottom:1px solid var(--div)}
+.faq-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;line-height:1.3;user-select:none;min-height:44px;padding:2px 0}
+.faq-icon{width:22px;height:22px;border-radius:50%;background:var(--a2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,transform .3s;margin-top:2px}
+.faq-icon svg{width:10px;height:10px;stroke:var(--accent);fill:none;stroke-width:2.5;stroke-linecap:round;transition:transform .3s}
+.faq-item.open .faq-icon{background:var(--a3)}
+.faq-item.open .faq-icon svg{transform:rotate(45deg)}
+.faq-a{font-size:14px;color:var(--text2);line-height:1.75;max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease}
+.faq-item.open .faq-a{max-height:600px;padding-top:13px}
+
 /* WAITLIST */
 .wl-sec{background:var(--text);color:var(--bg)}
 .wl-inner{max-width:600px}
 .wl-h2{font-size:clamp(34px,5vw,58px);color:var(--bg);margin:14px 0 18px;line-height:1.05}
-.wl-sub{font-size:15px;color:rgba(247,244,238,.5);line-height:1.7;max-width:440px;margin-bottom:32px}
-.wl-form{display:flex;gap:11px;margin-top:28px;flex-wrap:wrap}
-.wl-inp{flex:1;min-width:210px;background:rgba(247,244,238,.07);border:1px solid rgba(247,244,238,.14);border-radius:var(--rp);padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--bg);outline:none;transition:border-color .2s}
-.wl-inp::placeholder{color:rgba(247,244,238,.3)}.wl-inp:focus{border-color:var(--accent)}
-.wl-btn{background:var(--accent);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 26px;border-radius:var(--rp);border:none;cursor:pointer;transition:opacity .2s;white-space:nowrap}.wl-btn:hover{opacity:.8}
-.wl-ty{display:none;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:rgba(247,244,238,.6);margin-top:22px}
+.wl-sub{font-size:15px;color:rgba(247,244,238,.5);line-height:1.7;max-width:440px;margin-bottom:10px}
+/* Early access badge */
+.ea-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(123,169,154,.15);border:1px solid rgba(123,169,154,.25);border-radius:var(--rp);padding:6px 14px;margin-bottom:24px}
+.ea-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ea-badge span{font-size:11px;font-weight:500;letter-spacing:.04em;color:var(--accent)}
+/* Dual CTA wrapper — shows email OR app store based on class */
+.wl-dual{margin-top:28px}
+/* Email path — shown by default */
+.path-email{}
+/* App store path — hidden by default; add class 'app-live' to .wl-dual to show */
+.path-store{display:none}
+.wl-dual.app-live .path-email{display:none}
+.wl-dual.app-live .path-store{display:block}
+.store-cta{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:var(--text);padding:15px 28px;border-radius:var(--rp);font-size:15px;font-weight:500;transition:opacity .2s}
+.store-cta:hover{opacity:.85}
+.store-cta svg{width:20px;height:20px;fill:var(--text)}
+.store-sub{font-size:12px;color:rgba(247,244,238,.35);margin-top:14px;letter-spacing:.02em}
+.loops-wrap{width:100%;max-width:560px}
+.newsletter-form{display:flex;gap:11px;flex-wrap:wrap;width:100%}
+.newsletter-form-input{flex:1;min-width:0;background:rgba(247,244,238,.07);border:1px solid rgba(247,244,238,.14);border-radius:var(--rp);padding:13px 18px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--bg);outline:none;transition:border-color .2s;box-sizing:border-box}
+.newsletter-form-input::placeholder{color:rgba(247,244,238,.3)}.newsletter-form-input:focus{border-color:var(--accent)}
+.newsletter-form-button,.newsletter-loading-button{background:var(--accent);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:13px 26px;border-radius:var(--rp);border:none;cursor:pointer;transition:opacity .2s;white-space:nowrap;display:flex;align-items:center}
+.newsletter-form-button:hover{opacity:.8}
+.newsletter-success{margin-top:16px}
+.newsletter-success-message{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:rgba(247,244,238,.65)}
+.newsletter-error{margin-top:12px}
 .wl-leg{font-size:11px;color:rgba(247,244,238,.28);margin-top:14px;letter-spacing:.02em}
 
 /* FOOTER */
@@ -210,49 +298,81 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
 
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
-/* Loops form — Hayley styled */
-.loops-wrap { width: 100%; max-width: 560px; }
-.newsletter-form { display: flex; gap: 11px; flex-wrap: wrap; width: 100%; }
-.newsletter-form-input {
-  flex: 1; min-width: 0;
-  background: rgba(247,244,238,.07);
-  border: 1px solid rgba(247,244,238,.14);
-  border-radius: var(--rp);
-  padding: 13px 18px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  color: var(--bg);
-  outline: none;
-  transition: border-color .2s;
-  box-sizing: border-box;
+/* =====================
+   MOBILE — comprehensive
+   ===================== */
+@media(max-width:480px){
+
+  /* Hero text — let it breathe */
+  .hsub{font-size:18px}
+  .hclar,.hpain{max-width:none;font-size:15px}
+  .for-whom{margin-bottom:16px}
+  .priv-badge{flex-wrap:nowrap;width:100%}
+  .priv-badge span{font-size:10px;line-height:1.4}
+
+  /* Hero CTAs — full width stack */
+  .hacts{flex-direction:column;align-items:stretch;gap:12px}
+  .bd{width:100%;justify-content:center}
+  .bg{text-align:center;padding:4px 0}
+
+  /* Loop — single column already handled, ensure padding ok */
+  .ls{padding:22px 20px}
+
+  /* Demo section — ensure demo-arr visible even single col */
+  .demo-arr{opacity:1;transform:none}
+
+  /* Memory stacked cards — fix height for narrow screens */
+  .mem-vis{height:260px}
+  .mvc{padding:14px 16px}
+  .mventry{font-size:13px}
+
+  /* Weekly card header — stack on very small screens */
+  .wc-header{flex-direction:column;align-items:flex-start;gap:8px}
+  .wc-val{font-size:14px}
+
+  /* Privacy strip — single column */
+  .priv-strip-inner{flex-direction:column;align-items:flex-start;gap:20px;padding:0 clamp(20px,5vw,60px)}
+  .priv-item{gap:13px}
+
+  /* Pricing card */
+  .pamt{font-size:42px}
+
+  /* FAQ — bigger touch targets, prevent answer clipping */
+  .faq-q{font-size:17px;min-height:44px;align-items:flex-start;padding:4px 0}
+  .faq-item.open .faq-a{max-height:500px}
+  .faq-icon{margin-top:2px}
+
+  /* Waitlist form — stack input + button */
+  .newsletter-form{flex-direction:column;gap:10px}
+  .newsletter-form-input{width:100%;min-width:0}
+  .newsletter-form-button,.newsletter-loading-button{width:100%;justify-content:center}
+
+  /* App store CTA full width */
+  .store-cta{width:100%;justify-content:center}
+
+  /* Pattern tags — slightly smaller */
+  .ptag.lg{font-size:15px}
+  .ptag.md{font-size:13px}
+
+  /* Section vertical rhythm — tighten on mobile */
+  section{padding:clamp(40px,10vw,80px) 0}
 }
-.newsletter-form-input::placeholder { color: rgba(247,244,238,.3); }
-.newsletter-form-input:focus { border-color: var(--accent); }
-.newsletter-form-button,
-.newsletter-loading-button {
-  background: var(--accent);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 13px 26px;
-  border-radius: var(--rp);
-  border: none;
-  cursor: pointer;
-  transition: opacity .2s;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
+
+/* Mid-range: tablets and large phones */
+@media(max-width:640px) and (min-width:481px){
+  .newsletter-form{flex-direction:column;gap:10px}
+  .newsletter-form-input{width:100%}
+  .newsletter-form-button,.newsletter-loading-button{width:100%;justify-content:center}
+  .priv-strip-inner{flex-direction:column;align-items:flex-start;gap:18px;padding:0 clamp(20px,5vw,60px)}
+  .faq-item.open .faq-a{max-height:500px}
 }
-.newsletter-form-button:hover { opacity: .8; }
-.newsletter-success { margin-top: 16px; }
-.newsletter-success-message {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 21px;
-  color: rgba(247,244,238,.65);
+
+/* Safe area insets for notch/home-bar phones */
+@supports(padding:max(0px)){
+  nav{padding-left:max(clamp(20px,4vw,48px), env(safe-area-inset-left));padding-right:max(clamp(20px,4vw,48px), env(safe-area-inset-right))}
+  footer{padding-left:max(clamp(20px,4vw,48px), env(safe-area-inset-left));padding-right:max(clamp(20px,4vw,48px), env(safe-area-inset-right));padding-bottom:max(28px, env(safe-area-inset-bottom))}
+  .wl-sec .wrap{padding-bottom:max(0px, env(safe-area-inset-bottom))}
 }
-.newsletter-error { margin-top: 12px; }
 </style>
 </head>
 <body>
@@ -271,11 +391,22 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
 <div class="wrap">
 <div class="hero-grid">
   <div>
+    <!-- NEW: audience anchor chips -->
+    <div class="for-whom he">
+      <span class="fw-tag">founders</span>
+      <span class="fw-tag">makers</span>
+      <span class="fw-tag">overthinkers</span>
+    </div>
+
     <div class="eyebrow he"><span class="dot"></span><span class="lbl">a voice thinking companion for iOS</span></div>
     <h1 class="cg h1 he">think more<br>clearly.</h1>
     <div class="rule he"></div>
-    <p class="cgi hsub he">Speak for sixty seconds. Hayley reflects what you're really saying.</p>
-    <p class="hclar he">Not voice notes. Not AI chat. A companion that listens, identifies what's underneath, and builds a picture of how you think, over time.</p>
+
+    <!-- REVISED: pain-first framing before solution -->
+    <p class="cgi hsub he">You already know what you think. You just can't hear it yet.</p>
+    <p class="hclar he">Speak for sixty seconds. Hayley reflects what you're really saying — and remembers it, session after session.</p>
+    <p class="hpain he">Not voice notes. Not AI chat. A companion that listens, identifies what's underneath, and builds a picture of how you think, over time.</p>
+
     <div class="hacts he">
       <a href="#waitlist" class="bd">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="white" style="flex-shrink:0"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
@@ -283,12 +414,18 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
       </a>
       <a href="#how" class="bg">see how it works →</a>
     </div>
+
+    <!-- NEW: privacy trust signal above the fold -->
+    <div class="priv-badge he">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span>On-device transcription — your words never leave your phone</span>
+    </div>
   </div>
 
   <div class="hv">
     <div class="phone-wrap" id="pm">
       <div class="phone">
-        <div class="pnotch"></div>
+        <div class="pnotch-bar"><div class="pnotch"></div></div>
         <div class="pscreen">
           <div class="pstate-rec">
             <div style="display:flex;justify-content:space-between;margin-bottom:2px">
@@ -444,6 +581,51 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
 
 <div class="div"></div>
 
+<!-- NEW: WEEKLY REFLECTION — visualised -->
+<section class="weekly-sec">
+<div class="wrap">
+  <div class="weekly-grid">
+    <div class="weekly-txt">
+      <p class="lbl">weekly reflection</p>
+      <h2 class="cg weekly-h2">a summary that<br>earns its keep.</h2>
+      <p class="weekly-body">Every week, hayley surfaces what the sessions actually revealed — not just what you talked about, but what the pattern means. The one thing you kept circling. The thing you never quite said. And a single, concrete next step.</p>
+    </div>
+    <div class="weekly-card">
+      <div class="wc-header">
+        <span class="wc-date">week of may 5 – may 9</span>
+        <span class="wc-pill">weekly reflection</span>
+      </div>
+      <div class="wc-rule"></div>
+      <div class="wc-items">
+        <div class="wc-item">
+          <div class="wc-dot-col"><div class="wc-dot slow"></div></div>
+          <div>
+            <div class="wc-lbl">what slowed you</div>
+            <div class="wc-val">Waiting for certainty before moving. Every decision this week stalled at the same point — the moment it became real.</div>
+          </div>
+        </div>
+        <div class="wc-item">
+          <div class="wc-dot-col"><div class="wc-dot avoid"></div></div>
+          <div>
+            <div class="wc-lbl">what you avoided</div>
+            <div class="wc-val">Committing to the thing you already know you want. You named it twice, then changed the subject.</div>
+          </div>
+        </div>
+        <div class="wc-item">
+          <div class="wc-dot-col"><div class="wc-dot next"></div></div>
+          <div>
+            <div class="wc-lbl">one next step</div>
+            <div class="wc-val">Make the decision as if the outcome doesn't define you. Then see how it feels to have made it.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="div"></div>
+
 <!-- DIFF -->
 <section class="diff-sec">
 <div class="wrap">
@@ -470,6 +652,28 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
 
 <div class="div"></div>
 
+<!-- NEW: PRIVACY TRUST STRIP -->
+<section class="priv-strip">
+<div class="wrap">
+  <div class="priv-strip-inner">
+    <div class="priv-item">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <div class="priv-item-t"><strong>On-device transcription</strong>Your words never touch a server</div>
+    </div>
+    <div class="priv-item">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div class="priv-item-t"><strong>No account required to start</strong>7-day free trial, no card</div>
+    </div>
+    <div class="priv-item">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+      <div class="priv-item-t"><strong>No data sold. Ever.</strong>Your thinking is yours alone</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="div"></div>
+
 <!-- PRICING -->
 <section id="pricing">
 <div class="wrap">
@@ -487,11 +691,58 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
         <li class="pfeat">Unlimited voice entries, up to 60 seconds each</li>
         <li class="pfeat">Insight, pattern, and question after every entry</li>
         <li class="pfeat">Pattern memory that builds across sessions</li>
-        <li class="pfeat">Weekly reflection, what slowed you, what you avoided</li>
-        <li class="pfeat">On-device transcription, nothing leaves your phone</li>
+        <li class="pfeat">Weekly reflection: what slowed you, what you avoided, one next step</li>
+        <li class="pfeat">On-device transcription — nothing leaves your phone</li>
       </ul>
       <a href="#waitlist" class="bd" style="width:100%;justify-content:center;display:flex">start thinking, it's free</a>
       <p class="plegal">cancel in one tap. billed monthly after trial.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="div"></div>
+
+<!-- NEW: FAQ -->
+<section class="faq-sec" id="faq">
+<div class="wrap">
+  <div class="faq-grid">
+    <p class="lbl" style="margin-bottom:14px">common questions</p>
+    <h2 class="cgi faq-h2">a few things worth knowing.</h2>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Is this actually AI? Who made it?
+        <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></span>
+      </div>
+      <div class="faq-a">Yes — hayley uses AI to analyse what you say and surface what's underneath. It was built by a small team obsessed with the gap between thinking something and understanding it. We made this because we kept circling the same thoughts ourselves, and nothing we tried actually helped us process — only replay. So we built something that listens differently.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Can anyone see my entries?
+        <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></span>
+      </div>
+      <div class="faq-a">No. Transcription happens on your device — your voice never leaves your phone. Your entries are private by design, not by policy. We can't read them even if we wanted to.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Can I read back my old entries?
+        <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></span>
+      </div>
+      <div class="faq-a">Yes. Every entry is saved with its date, the three insight cards, and the pattern hayley detected. You can scroll back through your history at any time. The point isn't to re-read your words — it's to watch the patterns emerge over time.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        What happens after the 7-day trial?
+        <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></span>
+      </div>
+      <div class="faq-a">If you want to keep going, it's €5.99/month — no commitment, cancel in one tap. If you don't continue, your entries stay on your device. We don't delete anything. No card is required to start the trial.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Is this a replacement for therapy?
+        <span class="faq-icon"><svg viewBox="0 0 12 12"><line x1="6" y1="2" x2="6" y2="10"/><line x1="2" y1="6" x2="10" y2="6"/></svg></span>
+      </div>
+      <div class="faq-a">No, and we'd never claim otherwise. Hayley is a thinking companion — it helps you process and understand your own thoughts more clearly. It has no therapeutic intent, no clinical framework, and no agenda. If you're experiencing significant distress, please speak to a professional. Hayley works best alongside a clear head, not instead of support.</div>
     </div>
   </div>
 </div>
@@ -504,24 +755,51 @@ footer{padding:28px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
 <div class="wrap">
   <div class="wl-inner">
     <p class="lbl" style="color:rgba(247,244,238,.3)">early access</p>
-    <h2 class="cgi wl-h2">start thinking<br>more clearly.</h2>
-    <p class="wl-sub">Hayley is launching on iOS soon. Leave your email, one message when it's ready, nothing else.</p>
-    <div class="loops-wrap">
-      <div class="newsletter-form-container">
-        <form class="newsletter-form" action="https://app.loops.so/api/newsletter-form/cmoxx7zj704a60iwwv2g8urdy" method="POST">
-          <input class="newsletter-form-input" placeholder="your email address" required type="email" name="newsletter-form-input">
-          <button type="submit" class="newsletter-form-button">join waitlist</button>
-          <button type="button" class="newsletter-loading-button" style="display:none">please wait...</button>
-        </form>
-        <div class="newsletter-success" style="display:none">
-          <p class="newsletter-success-message">you're on the list. we'll be in touch.</p>
-        </div>
-        <div class="newsletter-error" style="display:none">
-          <p class="newsletter-error-message">something went wrong, please try again</p>
-        </div>
-        <button class="newsletter-back-button" type="button" style="display:none;background:transparent;border:none;cursor:pointer;color:rgba(247,244,238,.4);font-family:'DM Sans',sans-serif;font-size:13px;margin-top:12px">back</button>
-      </div>
+
+    <!-- NEW: urgency / exclusivity badge -->
+    <div class="ea-badge">
+      <div class="ea-dot"></div>
+      <span>spots filling — first 500 get early access</span>
     </div>
+
+    <h2 class="cgi wl-h2">start thinking<br>more clearly.</h2>
+    <p class="wl-sub">We're opening hayley to a small group first. Leave your email — one message when your spot is ready, nothing else.</p>
+
+    <!-- DUAL CTA: email path shown by default -->
+    <!-- To switch to App Store: add class 'app-live' to .wl-dual div below -->
+    <div class="wl-dual" id="wlDual">
+
+      <!-- EMAIL PATH -->
+      <div class="path-email">
+        <div class="loops-wrap">
+          <div class="newsletter-form-container">
+            <form class="newsletter-form" action="https://app.loops.so/api/newsletter-form/cmoxx7zj704a60iwwv2g8urdy" method="POST">
+              <input class="newsletter-form-input" placeholder="your email address" required type="email" name="newsletter-form-input">
+              <button type="submit" class="newsletter-form-button">join early access</button>
+              <button type="button" class="newsletter-loading-button" style="display:none">please wait...</button>
+            </form>
+            <div class="newsletter-success" style="display:none">
+              <p class="newsletter-success-message">you're on the list. we'll be in touch.</p>
+            </div>
+            <div class="newsletter-error" style="display:none">
+              <p class="newsletter-error-message">something went wrong, please try again</p>
+            </div>
+            <button class="newsletter-back-button" type="button" style="display:none;background:transparent;border:none;cursor:pointer;color:rgba(247,244,238,.4);font-family:'DM Sans',sans-serif;font-size:13px;margin-top:12px">back</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- APP STORE PATH (activate by adding class 'app-live' to #wlDual) -->
+      <div class="path-store">
+        <a href="https://apps.apple.com/app/hayley" class="store-cta">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          download on the app store
+        </a>
+        <p class="store-sub">free 7-day trial · no card required · iOS only</p>
+      </div>
+
+    </div>
+
     <p class="wl-leg">no spam. one email. unsubscribe instantly.</p>
   </div>
 </div>
@@ -545,7 +823,7 @@ let cyc=0;setInterval(()=>{cyc=(cyc+1)%2;ps(cyc)},4000);
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')});
 },{threshold:0.1});
-document.querySelectorAll('.ls,.ic,.dc,.mem-txt,.mem-vis,.ptags,.pt,.pcard,.demo-arr').forEach(el=>obs.observe(el));
+document.querySelectorAll('.ls,.ic,.dc,.mem-txt,.mem-vis,.ptags,.pt,.pcard,.demo-arr,.weekly-txt,.weekly-card').forEach(el=>obs.observe(el));
 
 // Nav highlight
 const secs=document.querySelectorAll('section[id]');
@@ -554,83 +832,75 @@ window.addEventListener('scroll',()=>{
   document.querySelectorAll('.nlink').forEach(l=>{l.style.color=l.getAttribute('href')==='#'+cur?'var(--text)':''});
 },{passive:true});
 
-// Loops newsletter form — attached on DOMContentLoaded to ensure DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-  function submitHandler(event) {
-    event.preventDefault();
-    var container = event.target.parentNode;
-    var form = container.querySelector('.newsletter-form');
-    var formInput = container.querySelector('.newsletter-form-input');
-    var success = container.querySelector('.newsletter-success');
-    var errorContainer = container.querySelector('.newsletter-error');
-    var errorMessage = container.querySelector('.newsletter-error-message');
-    var backButton = container.querySelector('.newsletter-back-button');
-    var submitButton = container.querySelector('.newsletter-form-button');
-    var loadingButton = container.querySelector('.newsletter-loading-button');
+// FAQ accordion
+function toggleFaq(el){
+  const item=el.closest('.faq-item');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
 
-    var time = new Date();
-    var timestamp = time.valueOf();
-    var previousTimestamp = localStorage.getItem('loops-form-timestamp');
-    if (previousTimestamp && Number(previousTimestamp) + 60000 > timestamp) {
-      errorContainer.style.display = 'flex';
-      errorMessage.innerText = 'Too many signups, please try again shortly';
-      submitButton.style.display = 'none';
-      formInput.style.display = 'none';
-      backButton.style.display = 'block';
+// Loops newsletter form
+document.addEventListener('DOMContentLoaded',function(){
+  function submitHandler(event){
+    event.preventDefault();
+    var container=event.target.parentNode;
+    var form=container.querySelector('.newsletter-form');
+    var formInput=container.querySelector('.newsletter-form-input');
+    var success=container.querySelector('.newsletter-success');
+    var errorContainer=container.querySelector('.newsletter-error');
+    var errorMessage=container.querySelector('.newsletter-error-message');
+    var backButton=container.querySelector('.newsletter-back-button');
+    var submitButton=container.querySelector('.newsletter-form-button');
+    var loadingButton=container.querySelector('.newsletter-loading-button');
+    var time=new Date();
+    var timestamp=time.valueOf();
+    var previousTimestamp=localStorage.getItem('loops-form-timestamp');
+    if(previousTimestamp&&Number(previousTimestamp)+60000>timestamp){
+      errorContainer.style.display='flex';
+      errorMessage.innerText='Too many signups, please try again shortly';
+      submitButton.style.display='none';
+      formInput.style.display='none';
+      backButton.style.display='block';
       return;
     }
-    localStorage.setItem('loops-form-timestamp', timestamp);
-
-    submitButton.style.display = 'none';
-    loadingButton.style.display = 'flex';
-
-    var formBody = 'userGroup=&mailingLists=&email=' + encodeURIComponent(formInput.value);
-
-    fetch(event.target.action, {
-      method: 'POST',
-      body: formBody,
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    localStorage.setItem('loops-form-timestamp',timestamp);
+    submitButton.style.display='none';
+    loadingButton.style.display='flex';
+    var formBody='userGroup=&mailingLists=&email='+encodeURIComponent(formInput.value);
+    fetch(event.target.action,{method:'POST',body:formBody,headers:{'Content-Type':'application/x-www-form-urlencoded'}})
+    .then(function(res){return Promise.all([res.ok,res.json()])})
+    .then(function(results){
+      var ok=results[0];var data=results[1];
+      if(ok){success.style.display='flex';form.reset();}
+      else{errorContainer.style.display='flex';errorMessage.innerText=data.message?data.message:'Something went wrong';}
     })
-    .then(function(res) { return Promise.all([res.ok, res.json()]); })
-    .then(function(results) {
-      var ok = results[0];
-      var data = results[1];
-      if (ok) {
-        success.style.display = 'flex';
-        form.reset();
-      } else {
-        errorContainer.style.display = 'flex';
-        errorMessage.innerText = data.message ? data.message : 'Something went wrong';
-      }
+    .catch(function(){
+      errorContainer.style.display='flex';
+      errorMessage.innerText='Something went wrong, please try again';
+      localStorage.setItem('loops-form-timestamp','');
     })
-    .catch(function(error) {
-      errorContainer.style.display = 'flex';
-      errorMessage.innerText = 'Something went wrong, please try again';
-      localStorage.setItem('loops-form-timestamp', '');
-    })
-    .finally(function() {
-      formInput.style.display = 'none';
-      loadingButton.style.display = 'none';
-      backButton.style.display = 'block';
+    .finally(function(){
+      formInput.style.display='none';
+      loadingButton.style.display='none';
+      backButton.style.display='block';
     });
   }
-
-  function resetFormHandler(event) {
-    var container = event.target.parentNode;
-    container.querySelector('.newsletter-success').style.display = 'none';
-    container.querySelector('.newsletter-error').style.display = 'none';
-    container.querySelector('.newsletter-error-message').innerText = 'Something went wrong, please try again';
-    container.querySelector('.newsletter-back-button').style.display = 'none';
-    container.querySelector('.newsletter-form-input').style.display = 'flex';
-    container.querySelector('.newsletter-form-button').style.display = 'flex';
+  function resetFormHandler(event){
+    var container=event.target.parentNode;
+    container.querySelector('.newsletter-success').style.display='none';
+    container.querySelector('.newsletter-error').style.display='none';
+    container.querySelector('.newsletter-error-message').innerText='Something went wrong, please try again';
+    container.querySelector('.newsletter-back-button').style.display='none';
+    container.querySelector('.newsletter-form-input').style.display='flex';
+    container.querySelector('.newsletter-form-button').style.display='flex';
   }
-
-  var formContainers = document.getElementsByClassName('newsletter-form-container');
-  for (var i = 0; i < formContainers.length; i++) {
-    var fc = formContainers[i];
-    if (fc.classList.contains('newsletter-handlers-added')) continue;
-    fc.querySelector('.newsletter-form').addEventListener('submit', submitHandler);
-    fc.querySelector('.newsletter-back-button').addEventListener('click', resetFormHandler);
+  var formContainers=document.getElementsByClassName('newsletter-form-container');
+  for(var i=0;i<formContainers.length;i++){
+    var fc=formContainers[i];
+    if(fc.classList.contains('newsletter-handlers-added'))continue;
+    fc.querySelector('.newsletter-form').addEventListener('submit',submitHandler);
+    fc.querySelector('.newsletter-back-button').addEventListener('click',resetFormHandler);
     fc.classList.add('newsletter-handlers-added');
   }
 });
