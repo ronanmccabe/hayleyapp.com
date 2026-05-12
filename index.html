@@ -175,14 +175,16 @@
     font-weight: 400;
     color: var(--muted);
     letter-spacing: 0.04em;
-    display: flex; align-items: center; gap: 6px;
   }
-  .hero-trust::before {
-    content: '';
+  .hero-trust-dot {
     display: inline-block;
     width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--sage);
+    margin-right: 6px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
   }
 
   /* ── ENTRY CARD DEMO ── */
@@ -310,6 +312,11 @@
   .step {
     background: var(--cream);
     padding: 36px 32px;
+  }
+  .step-icon {
+    width: 32px; height: 32px;
+    margin-bottom: 16px;
+    display: block;
   }
   .step-num {
     font-family: 'Cormorant Garamond', serif;
@@ -626,27 +633,26 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0;
     margin-bottom: 28px;
     flex: 1;
-  }
-  .price-features li {
     font-size: 0.82rem;
     font-weight: 300;
     color: var(--muted);
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    line-height: 1.4;
+    line-height: 1.7;
   }
-  .price-card.featured .price-features li { color: rgba(247,244,238,0.65); }
-  .price-features li::before {
-    content: '–';
-    color: var(--sage);
-    flex-shrink: 0;
-    margin-top: 1px;
+  .price-features li {
+    display: inline;
   }
-  .price-card.featured .price-features li::before { color: var(--sage-light); }
+  .price-features li::after {
+    content: ', ';
+  }
+  .price-features li:last-child::after {
+    content: '.';
+  }
+  .price-card.featured .price-features { color: rgba(247,244,238,0.65); }
+  .price-features li::before { display: none; }
+  .price-card.featured .price-features li::before { display: none; }
   .price-btn {
     display: block;
     text-align: center;
@@ -685,42 +691,55 @@
     margin-bottom: 20px;
   }
   .includes-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
     list-style: none;
-  }
-  .includes-list li {
     font-size: 0.82rem;
     font-weight: 300;
     color: var(--dark);
-    display: flex; align-items: center; gap: 8px;
+    line-height: 1.7;
   }
-  .includes-list li::before {
-    content: '✓';
-    color: var(--sage);
-    font-weight: 500;
-    font-size: 0.75rem;
-  }
+  .includes-list li { display: inline; }
+  .includes-list li::after { content: ', '; }
+  .includes-list li:last-child::after { content: '.'; }
+  .includes-list li::before { display: none; }
 
-  /* ── FAQ ── */
+  /* ── FAQ ACCORDION ── */
   #faq { border-top: 1px solid var(--border); }
   .faq-list { max-width: 680px; }
   .faq-item {
     border-bottom: 1px solid var(--border);
-    padding: 24px 0;
   }
-  .faq-q {
+  .faq-item summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 0;
+    cursor: pointer;
     font-size: 0.92rem;
     font-weight: 400;
     color: var(--dark);
-    margin-bottom: 10px;
+    user-select: none;
+    gap: 16px;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--sage);
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
   }
   .faq-a {
     font-size: 0.85rem;
     font-weight: 300;
     color: var(--muted);
     line-height: 1.65;
+    padding-bottom: 22px;
   }
 
   /* ── WAITLIST / CTA ── */
@@ -1000,7 +1019,7 @@
     <a href="#waitlist" class="btn-primary">get early access</a>
     <a href="#how" class="btn-ghost">see how it works →</a>
   </div>
-  <p class="hero-trust">on-device transcription — your words never leave your phone</p>
+  <p class="hero-trust"><span class="hero-trust-dot"></span>on-device transcription — your words never leave your phone</p>
 
   <!-- Entry card demo -->
   <div class="hero-card">
@@ -1041,21 +1060,53 @@
     <p class="section-intro">No prompts, no structure. Just talk. Hayley does the rest.</p>
     <div class="steps-grid">
       <div class="step">
+        <svg class="step-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="3" y="1" width="4" height="14" rx="2" fill="#7BA99A" opacity="0.3"/>
+          <rect x="9" y="5" width="4" height="20" rx="2" fill="#7BA99A" opacity="0.55"/>
+          <rect x="15" y="0" width="4" height="28" rx="2" fill="#7BA99A" opacity="0.85"/>
+          <rect x="21" y="7" width="4" height="16" rx="2" fill="#7BA99A" opacity="0.55"/>
+          <rect x="27" y="11" width="4" height="10" rx="2" fill="#7BA99A" opacity="0.3"/>
+        </svg>
         <div class="step-num">01</div>
         <h3>speak naturally</h3>
         <p>Tap. Talk. No prompts, no structure. Just say what's on your mind, up to sixty seconds.</p>
       </div>
       <div class="step">
+        <svg class="step-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="6" width="28" height="8" rx="3" stroke="#7BA99A" stroke-width="1.5" fill="#7BA99A" fill-opacity="0.07"/>
+          <rect x="2" y="19" width="20" height="8" rx="3" stroke="#7BA99A" stroke-width="1.5" fill="#7BA99A" fill-opacity="0.14"/>
+        </svg>
         <div class="step-num">02</div>
         <h3>hayley reflects</h3>
         <p>Three cards: an insight about what you're really saying, a pattern detected, and one question worth sitting with.</p>
       </div>
       <div class="step">
+        <svg class="step-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="6" cy="26" r="2.5" fill="#7BA99A" opacity="0.3"/>
+          <circle cx="14" cy="20" r="2.5" fill="#7BA99A" opacity="0.45"/>
+          <circle cx="9" cy="13" r="2.5" fill="#7BA99A" opacity="0.6"/>
+          <circle cx="20" cy="24" r="2.5" fill="#7BA99A" opacity="0.45"/>
+          <circle cx="23" cy="14" r="2.5" fill="#7BA99A" opacity="0.65"/>
+          <circle cx="17" cy="7" r="2.5" fill="#7BA99A" opacity="0.8"/>
+          <circle cx="26" cy="7" r="3" fill="#7BA99A"/>
+          <line x1="6" y1="26" x2="14" y2="20" stroke="#7BA99A" stroke-width="1" opacity="0.25"/>
+          <line x1="14" y1="20" x2="9" y2="13" stroke="#7BA99A" stroke-width="1" opacity="0.25"/>
+          <line x1="14" y1="20" x2="20" y2="24" stroke="#7BA99A" stroke-width="1" opacity="0.25"/>
+          <line x1="20" y1="24" x2="23" y2="14" stroke="#7BA99A" stroke-width="1" opacity="0.25"/>
+          <line x1="23" y1="14" x2="17" y2="7" stroke="#7BA99A" stroke-width="1" opacity="0.25"/>
+          <line x1="23" y1="14" x2="26" y2="7" stroke="#7BA99A" stroke-width="1" opacity="0.25"/>
+        </svg>
         <div class="step-num">03</div>
         <h3>patterns emerge</h3>
         <p>Each entry builds context. Hayley notices recurring language, emotional patterns, and what keeps surfacing.</p>
       </div>
       <div class="step">
+        <svg class="step-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="13.5" stroke="#7BA99A" stroke-width="1.5" opacity="0.2"/>
+          <circle cx="16" cy="16" r="9" stroke="#7BA99A" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="16" cy="16" r="4.5" stroke="#7BA99A" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="16" cy="16" r="2" fill="#7BA99A"/>
+        </svg>
         <div class="step-num">04</div>
         <h3>memory deepens</h3>
         <p>Monthly reflections surface what slowed you, what you avoided, one next step. Context that builds over months.</p>
@@ -1262,30 +1313,30 @@
     <p class="section-label">common questions</p>
     <h2>a few things<br /><em>worth knowing.</em></h2>
     <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q">Is this actually AI? Who made it?</div>
+      <details class="faq-item">
+        <summary>Is this actually AI? Who made it?</summary>
         <div class="faq-a">Yes — Hayley uses AI to analyse what you say and surface what's underneath. It was built by a small team obsessed with the gap between thinking something and understanding it. We made this because we kept circling the same thoughts ourselves, and nothing we tried actually helped us process — only replay. So we built something that listens differently.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Can anyone see my entries?</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can anyone see my entries?</summary>
         <div class="faq-a">No. Transcription happens on your device — your voice never leaves your phone. Your entries are private by design, not by policy. We can't read them even if we wanted to.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What happens during onboarding?</div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens during onboarding?</summary>
         <div class="faq-a">When you first open Hayley, a short onboarding flow walks you through how it works — including a sample insight so you can see exactly what to expect. You'll make your first voice recording before reaching the paywall, so you know what you're signing up for before committing anything.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Can I read back my old entries?</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I read back my old entries?</summary>
         <div class="faq-a">Yes. Every entry is saved with its date, the three insight cards, and the pattern Hayley detected. You can scroll back through your history at any time. The point isn't to re-read your words — it's to watch the patterns emerge over time.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">What happens after the 14-day trial?</div>
+      </details>
+      <details class="faq-item">
+        <summary>What happens after the 14-day trial?</summary>
         <div class="faq-a">If you're one of the first 500, your price is €3.99/month, locked for life. After that, it's €5.99/month. No card is required to start the trial. If you don't continue, your entries stay on your device — we don't delete anything.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Is this a replacement for therapy?</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is this a replacement for therapy?</summary>
         <div class="faq-a">No, and we'd never claim otherwise. Hayley is a thinking companion — it helps you process and understand your own thoughts more clearly. It has no therapeutic intent, no clinical framework, and no agenda. If you're experiencing significant distress, please speak to a professional. Hayley works best alongside a clear head, not instead of support.</div>
-      </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1296,7 +1347,7 @@
     <div class="waitlist-inner">
       <div class="waitlist-spots"><span class="spots-dot"></span> founding pricing · first 500 users · €3.99/month for life</div>
       <h2>think more<br /><em>clearly.</em></h2>
-      <p class="section-intro" style="margin: 0 auto;">The first 500 people to join lock in €3.99/month for life. That price never increases, regardless of what Hayley costs after the first 500. The standard price is €5.99/month. The 14-day free trial applies either way — no card required.</p>
+      <p class="section-intro" style="margin: 0 auto;">The 14-day free trial applies either way. No card required.</p>
 
       <div class="waitlist-form">
         <input type="email" class="waitlist-input" placeholder="your@email.com" id="email-input" />
