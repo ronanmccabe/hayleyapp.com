@@ -120,11 +120,11 @@ footer{padding:24px clamp(20px,4vw,48px);display:flex;justify-content:space-betw
         </div>
         <div>
           <div class="contact-label">email us</div>
-          <div class="contact-email">ronan@getmonthly.co</div>
+          <div class="contact-email">hello@getmonthly.co</div>
           <div class="contact-note">We aim to reply within one business day.</div>
         </div>
       </div>
-      <a href="mailto:ronan@getmonthly.co" class="contact-btn">
+      <a href="mailto:hello@getmonthly.co" class="contact-btn">
         <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         open email
       </a>
@@ -170,7 +170,7 @@ function setTopic(el, topic) {
   document.querySelectorAll('.topic').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   const subject = encodeURIComponent('Hayley — ' + topic);
-  document.querySelector('.contact-btn').href = 'mailto:ronan@getmonthly.co?subject=' + subject;
+  document.querySelector('.contact-btn').href = 'mailto:hello@getmonthly.co?subject=' + subject;
 }
 </script>
 
