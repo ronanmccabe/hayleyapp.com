@@ -876,20 +876,16 @@
     .hero { padding: 110px 20px 56px; }
     .hero-sub { font-size: 0.95rem; }
 
-    /* Hero buttons — badge centres, ghost button full width */
+    /* Hero buttons — badges side by side, centred, equal height */
     .btn-row {
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      gap: 12px;
-      width: 100%;
-    }
-    .btn-row .asbadge img { height: 48px; }
-    .btn-row .btn-ghost {
-      width: 100%;
-      max-width: 280px;
       justify-content: center;
-      text-align: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 100%;
     }
+    .btn-row .asbadge img { height: 40px !important; width: auto !important; }
 
     /* Hero card */
     .hero-card { max-width: 100%; }
@@ -1102,8 +1098,10 @@
   <ul class="nav-links">
     <li><a href="#how">how it works</a></li>
     <li><a href="#pricing">pricing</a></li>
-    <li><a href="https://apps.apple.com/app/id6767863655" class="asbadge" aria-label="Download on the App Store"><img src="app-store-black.svg" alt="Download on the App Store" /></a></li>
-    <li><a href="/android/" class="asbadge" aria-label="Get it on Google Play"><img src="google-play-badge.svg" alt="Get it on Google Play" /></a></li>
+    <li style="display:flex;align-items:center;gap:8px;">
+      <a href="https://apps.apple.com/app/id6767863655" class="asbadge" aria-label="Download on the App Store"><img src="app-store-black.svg" alt="Download on the App Store" style="height:30px;display:block;" /></a>
+      <a href="/android/" class="asbadge" aria-label="Get it on Google Play"><img src="google-play-badge.svg" alt="Get it on Google Play" style="height:30px;display:block;" /></a>
+    </li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
@@ -1114,10 +1112,8 @@
 <div class="nav-drawer" id="nav-drawer">
   <a href="#how" class="drawer-link">how it works</a>
   <a href="#pricing" class="drawer-link">pricing</a>
-  <div style="display:flex;gap:10px;justify-content:center;padding:12px 0;border-bottom:1px solid var(--border);">
-    <a href="https://apps.apple.com/app/id6767863655" class="asbadge" aria-label="Download on the App Store"><img src="app-store-black.svg" alt="Download on the App Store" style="height:36px;" /></a>
-    <a href="/android/" class="asbadge" aria-label="Get it on Google Play"><img src="google-play-badge.svg" alt="Get it on Google Play" style="height:36px;" /></a>
-  </div>
+  <a href="https://apps.apple.com/app/id6767863655" class="drawer-link">download on the app store</a>
+  <a href="/android/" class="drawer-link">android early access</a>
 </div>
 
 <!-- HERO -->
@@ -1130,13 +1126,13 @@
   </p>
   <div class="btn-row">
     <a href="https://apps.apple.com/app/id6767863655" class="asbadge asbadge-lg" aria-label="Download on the App Store">
-      <img src="app-store-black.svg" alt="Download on the App Store" />
+      <img src="app-store-black.svg" alt="Download on the App Store" style="height:44px;" />
     </a>
     <a href="/android/" class="asbadge asbadge-lg" aria-label="Get it on Google Play">
-      <img src="google-play-badge.svg" alt="Get it on Google Play" />
+      <img src="google-play-badge.svg" alt="Get it on Google Play" style="height:44px;" />
     </a>
-    <a href="#how" class="btn-ghost">see how it works →</a>
   </div>
+  <a href="#how" class="btn-ghost" style="margin-top:4px;">see how it works →</a>
   <p class="hero-trust"><span class="hero-trust-dot"></span>14-day free trial · your voice audio never leaves your phone</p>
 
   <!-- Entry card demo -->
