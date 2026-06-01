@@ -770,10 +770,10 @@
   .asbadge:hover { opacity: 0.82; }
   .asbadge img {
     display: block;
-    height: 44px;
+    height: 40px;
     width: auto;
   }
-  .asbadge-lg img { height: 52px; }
+  .asbadge-lg img { height: 44px; }
   nav .asbadge img { height: 30px; }
 
   /* ── FOOTER ── */
@@ -1103,6 +1103,7 @@
     <li><a href="#how">how it works</a></li>
     <li><a href="#pricing">pricing</a></li>
     <li><a href="https://apps.apple.com/app/id6767863655" class="asbadge" aria-label="Download on the App Store"><img src="app-store-black.svg" alt="Download on the App Store" /></a></li>
+    <li><a href="/android/" class="asbadge" aria-label="Get it on Google Play"><img src="google-play-badge.svg" alt="Get it on Google Play" /></a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
     <span></span><span></span><span></span>
@@ -1113,7 +1114,10 @@
 <div class="nav-drawer" id="nav-drawer">
   <a href="#how" class="drawer-link">how it works</a>
   <a href="#pricing" class="drawer-link">pricing</a>
-  <a href="https://apps.apple.com/app/id6767863655" class="drawer-link asbadge" aria-label="Download on the App Store" style="text-align:center;border-bottom:none;background:none;"><img src="app-store-black.svg" alt="Download on the App Store" style="height:36px;margin:8px auto 0;" /></a>
+  <div style="display:flex;gap:10px;justify-content:center;padding:12px 0;border-bottom:1px solid var(--border);">
+    <a href="https://apps.apple.com/app/id6767863655" class="asbadge" aria-label="Download on the App Store"><img src="app-store-black.svg" alt="Download on the App Store" style="height:36px;" /></a>
+    <a href="/android/" class="asbadge" aria-label="Get it on Google Play"><img src="google-play-badge.svg" alt="Get it on Google Play" style="height:36px;" /></a>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -1527,7 +1531,8 @@
         <div class="footer-col-links">
           <a href="https://hayleyapp.com/#how">how it works</a>
           <a href="https://hayleyapp.com/#pricing">pricing</a>
-          <a href="https://apps.apple.com/app/id6767863655">download</a>
+          <a href="https://apps.apple.com/app/id6767863655">download on iOS</a>
+          <a href="/android/">android early access</a>
           <a href="https://hayleyapp.com/privacy">privacy policy</a>
           <a href="mailto:hello@getmonthly.co">contact</a>
         </div>
@@ -1541,13 +1546,15 @@
         <li><a href="mailto:hello@getmonthly.co">contact</a></li>
       </ul>
       <div class="footer-bottom-right">
+        <a href="https://apps.apple.com/app/id6767863655" class="asbadge" aria-label="Download on the App Store"><img src="app-store-black.svg" alt="Download on the App Store" style="height:24px;opacity:0.6;" /></a>
+        <a href="/android/" class="asbadge" aria-label="Get it on Google Play"><img src="google-play-badge.svg" alt="Get it on Google Play" style="height:24px;opacity:0.6;" /></a>
         <a href="https://www.instagram.com/hayleyapp_com/" target="_blank" rel="noopener" aria-label="Hayley on Instagram" class="footer-social">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
         </a>
         <a href="https://www.facebook.com/profile.php?id=61589696746543" target="_blank" rel="noopener" aria-label="Hayley on Facebook" class="footer-social">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         </a>
-        <span class="footer-bottom-copy">a thinking companion · iOS</span>
+        <span class="footer-bottom-copy">iOS &amp; Android</span>
       </div>
     </div>
   </div>
