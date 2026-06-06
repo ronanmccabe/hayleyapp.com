@@ -85,6 +85,9 @@ footer{
   <h2>ai insights</h2>
   <p>After transcription, the text of your entry is sent via an encrypted HTTPS connection to Anthropic's API to generate your insight, pattern, and question cards. This text is processed in real time and is not stored by Hayley beyond the duration of the API call. Anthropic's own data handling and privacy policies apply to this transmission. You can review them at anthropic.com/privacy.</p>
 
+  <h2>android transcription</h2>
+  <p>On Android, voice transcription is handled by Google's Speech Recognition service. Audio is transmitted to Google's servers for transcription. Google's privacy policy applies to this processing. The transcribed text is then sent to Anthropic's API to generate your insight, pattern, and question. Neither the audio nor the transcript is stored by us beyond the duration of these API calls. All session history and insights are stored locally on your device only.</p>
+
   <h2>local storage</h2>
   <p>Your journal entries, insights, and patterns are stored locally on your device using Apple's SwiftData framework. This data never leaves your device and is not accessible to us. If you delete the app, all data is permanently deleted.</p>
 
@@ -97,7 +100,8 @@ footer{
   <h2>third party services</h2>
   <p>Hayley uses the following third-party services:</p>
   <p><strong>Anthropic Claude API</strong> — used to generate insights from your transcribed entries. Text is sent over encrypted connections and not retained. anthropic.com/privacy</p>
-  <p><strong>Apple Speech Recognition</strong> — used for on-device voice transcription. Governed by Apple's privacy policy. apple.com/privacy</p>
+  <p><strong>Apple Speech Recognition</strong> — used for on-device voice transcription on iOS. Governed by Apple's privacy policy. apple.com/privacy</p>
+  <p><strong>Google Speech Recognition</strong> — used for voice transcription on Android. Audio is transmitted to Google's servers for processing. Governed by Google's privacy policy. policies.google.com/privacy</p>
 
   <h2>children</h2>
   <p>Hayley is not directed at children under the age of 13 and we do not knowingly collect data from children.</p>
